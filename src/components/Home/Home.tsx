@@ -13,6 +13,7 @@ import mask from '../../assets/images/masks.png';
 import map from '../../assets/images/map.png';
 import market from '../../assets/images/market.png';
 import {Link} from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 const slides = [
   {
@@ -64,7 +65,7 @@ const slideBackgroundColor = (index: number) => {
 const Home: React.FC = () => {
   return (
     <div className='home'>
-      <div className='home__container container'>
+      <div className='home__container'>
 
         <Navbar />
 
@@ -111,6 +112,10 @@ const Home: React.FC = () => {
             ))}
 
           </div>
+        </div>
+
+        <div className='home__footer'>
+          <Footer />
         </div>
 
       </div>
