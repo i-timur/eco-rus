@@ -5,17 +5,21 @@ import logo from '../../assets/icons/logo.svg';
 import pin from '../../assets/icons/pin.svg';
 import ecoDollar from  '../../assets/icons/eco-dollar.svg';
 import avatarIcon from '../../assets/icons/profile-image.svg';
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 const activeClassName = 'navigation__link navigation__link_active';
 const notActiveClassName = 'navigation__link';
+
+const userId = 1;
 
 const Navbar: React.FC = () => {
   return (
     <div className='navbar'>
       <div className='navbar__container container'>
         <div className='navbar__logo'>
-          <img src={logo} alt='logo' />
+          <Link to='/'>
+            <img src={logo} alt='logo' />
+          </Link>
         </div>
         <nav className='navbar__navigation navigation'>
           <ul className='navigation__list'>
@@ -64,7 +68,7 @@ const Navbar: React.FC = () => {
           </li>
           <li className='user-navbar__item'>
             <img src={avatarIcon} alt='avatar' />
-            Алексей
+            <Link to={`/profile/${userId}`} className='user-navbar__link'>Алексей</Link>
           </li>
         </ul>
       </div>
