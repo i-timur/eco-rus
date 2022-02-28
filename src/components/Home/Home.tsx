@@ -10,6 +10,9 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import recycle from '../../assets/images/recycle.png';
 import plastic from '../../assets/images/plastic.png';
 import mask from '../../assets/images/masks.png';
+import map from '../../assets/images/map.png';
+import market from '../../assets/images/market.png';
+import {Link} from 'react-router-dom';
 
 const slides = [
   {
@@ -32,6 +35,19 @@ const slides = [
   },
 ];
 
+const cards = [
+  {
+    title: 'Пункты сбора',
+    subtitle: 'Посмотри, где в твоем городе можно сдать вторсырье на переработку',
+    image: map
+  },
+  {
+    title: 'ЭкоМаркет',
+    subtitle: 'Используй заработанные экокоины для покупки товаров из переработанных материалов',
+    image: market
+  }
+];
+
 const slideBackgroundColor = (index: number) => {
   switch (index) {
     case 0:
@@ -49,7 +65,9 @@ const Home: React.FC = () => {
   return (
     <div className='home'>
       <div className='home__container container'>
+
         <Navbar />
+
         <div className='home__slider slider-home'>
           <Swiper
             modules={[Navigation]}
@@ -73,6 +91,28 @@ const Home: React.FC = () => {
             ))}
           </Swiper>
         </div>
+
+        <div className='home__cards cards-home'>
+          <div className='cards-home__container container'>
+
+            {cards.map((card, i) => (
+              <div className='cards-home__item'>
+                <div className='cards-home__card'>
+                  <div className='cards-home__content'>
+                    <h1 className='cards-home__title'>{card.title}</h1>
+                    <h2 className='cards-home__subtitle'>{card.subtitle}</h2>
+                    <Link to='#' className='cards-home__button'></Link>
+                  </div>
+                  <div className='cards-home__image'>
+                    <img src={card.image} alt='card' />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
+
       </div>
     </div>
   );
