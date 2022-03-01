@@ -6,6 +6,7 @@
     position: relative;
     max-width: 1200px;
     margin: 120px auto 0;
+
   }
 
   &__cards {
@@ -21,53 +22,12 @@
   }
 }
 
-.slide-home {
-  height: 360px;
-  display: flex;
-  justify-content: space-between;
-
-  &__green {
-    background: #B3EDC8;
-  }
-
-  &__orange {
-    background: #FFE48F;
-  }
-
-  &__light-green {
-    background: #BFF0DE;
-  }
-
-  &__content {
-    padding: 56px 0 0 64px;
-  }
-
-  &__image {
-    img {
-      object-fit: cover;
-    }
-  }
-
-  &__title {
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 56px;
-    color: #000B26;
-  }
-
-  &__subtitle {
-    margin: 16px 0 0 0;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: rgba(0, 11, 38, 0.8);
-  }
-
-  &__button {
-    margin: 40px 0 0 0;
+.slider {
+  &__container {
+    overflow: hidden;
+    border-radius: 16px;
   }
 }
-
 .swiper {
   position: static;
 
@@ -126,56 +86,5 @@
 
   &__item {
     flex: 0 1 50%;
-  }
-
-  &__card {
-    height: 100%;
-    display: flex;
-    background: #FFFFFF;
-    border: 1px solid rgba(18, 34, 88, 0.12);
-    border-radius: 16px;
-  }
-
-  &__content {
-    flex: 0 1 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 40px 0 40px 40px;
-  }
-
-  &__title {
-    white-space: nowrap;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 40px;
-    color: #000B26;
-  }
-
-  &__subtitle {
-    margin: 14px 0 0 0;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    color: rgba(0, 11, 38, 0.56);
-  }
-
-  &__button {
-    display: block;
-    margin: 46px 0 0 0;
-    width: 48px;
-    height: 48px;
-    background-image: url('../../assets/icons/arrow-right.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: rgba(62, 80, 114, 0.08);
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  &__image {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
   }
 }
