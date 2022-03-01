@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Navbar.scss';
 import logo from '../../assets/icons/logo.svg';
-import pin from '../../assets/icons/pin.svg';
 import ecoDollar from  '../../assets/icons/eco-dollar.svg';
 import avatarIcon from '../../assets/icons/profile-image.svg';
 import {Link, NavLink} from 'react-router-dom';
+import Icon from '../../utils/Icon';
 
 const activeClassName = 'navigation__link navigation__link_active';
 const notActiveClassName = 'navigation__link';
@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
         </nav>
         <ul className='navbar__user user-navbar'>
           <li className='user-navbar__item'>
-            <img src={pin} alt='pin' />
+            <Icon name='pin' color='rgba(0, 11, 38, 0.72)' />
             Казань
           </li>
           <li className='user-navbar__item'>
