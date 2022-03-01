@@ -1,8 +1,7 @@
 import React from 'react';
 
 import './Footer.scss';
-import mailIcon from '../../assets/icons/mail.svg';
-import phoneIcon from '../../assets/icons/phone.svg';
+import Icon from '../../utils/Icon';
 
 const Footer: React.FC = () => {
   return (
@@ -10,11 +9,11 @@ const Footer: React.FC = () => {
       <div className='footer__container container'>
         <ul className='footer__contacts'>
           <li className='footer__contact'>
-            <img src={mailIcon} alt='mail' />
+            <Icon name='mail' color='rgba(0, 11, 38, 0.32)' />
             <a href='mailto:info@ecorus.ru' className='footer__link'>info@ecorus.ru</a>
           </li>
           <li className='footer__contact'>
-            <img src={phoneIcon} alt='phone' />
+            <Icon name='phone' color='rgba(0, 11, 38, 0.32)' />
             <a href='tel:+78008808888' className='footer__link'>+7 (800) 880-88-88</a>
           </li>
         </ul>
