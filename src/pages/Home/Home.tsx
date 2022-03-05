@@ -10,9 +10,9 @@ import plastic from '../../assets/images/plastic.png';
 import mask from '../../assets/images/masks.png';
 import map from '../../assets/images/map.png';
 import market from '../../assets/images/market.png';
-import Footer from '../Footer/Footer';
-import Slide from '../Slide/Slide';
-import Card from '../Card/Card';
+import Footer from '../../components/Footer/Footer';
+import Slide from '../../components/Slide/Slide';
+import Card from '../../components/Card/Card';
 
 const slides = [
   {
@@ -42,11 +42,13 @@ const cards = [
   {
     title: 'Пункты сбора',
     subtitle: 'Посмотри, где в твоем городе можно сдать вторсырье на переработку',
+    link: 'map',
     image: map
   },
   {
     title: 'ЭкоМаркет',
     subtitle: 'Используй заработанные экокоины для покупки товаров из переработанных материалов',
+    link: 'market',
     image: market
   }
 ];
@@ -63,7 +65,7 @@ const Home: React.FC = () => {
               navigation
             >
               {slides.map((slide, i) => (
-                <SwiperSlide>
+                <SwiperSlide key={i}>
                   <Slide
                     index={i}
                     title={slide.title}
@@ -82,11 +84,11 @@ const Home: React.FC = () => {
           <div className='cards-home__container container'>
 
             {cards.map((card, i) => (
-              <div className='cards-home__item'>
+              <div className='cards-home__item' key={i}>
                 <Card
-                  key={i}
                   title={card.title}
                   subtitle={card.subtitle}
+                  to={card.link}
                   image={card.image}
                 />
               </div>
