@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Footer.scss';
-import Icon from '../../utils/Icon';
+import Icon from '../Icon/Icon';
 
 const Footer: React.FC = () => {
   return (

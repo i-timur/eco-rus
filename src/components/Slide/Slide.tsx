@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Slide.scss';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
+import SliderButton from '../SliderButton/SliderButton';
 import {getSlideBackgroundColor} from '../../utils/utils';
 
 
@@ -21,7 +21,7 @@ const Slide: React.FC<Props> = ({index, title, subtitle, buttonValue, buttonTo, 
         <h1 className='slide__title'>{title}</h1>
         <h3 className='slide__subtitle'>{subtitle}</h3>
         <div className='slide__button'>
-          <PrimaryButton to={buttonTo}>{buttonValue}</PrimaryButton>
+          <SliderButton to={buttonTo}>{buttonValue}</SliderButton>
         </div>
       </div>
       <div className='slide__image'>

@@ -1,16 +1,16 @@
 import React, {PropsWithChildren} from 'react';
 
-import './PrimaryButton.scss';
+import './SecondaryButton.scss';
 
 interface Props {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const PrimaryButton: React.FC<PropsWithChildren<Props>> = ({onClick, children}) => {
+const SecondaryButton: React.FC<PropsWithChildren<Props>> = ({onClick, children}) => {
   return (
-    <div className='primary-button-container'>
+    <div className='secondary-button-container'>
       <button
-        className='primary-button-container__button'
+        className='secondary-button-container__button'
         type='submit'
         onClick={onClick}
       >
@@ -20,4 +20,4 @@ const PrimaryButton: React.FC<PropsWithChildren<Props>> = ({onClick, children}) 
   );
 };
 
-export default PrimaryButton;
+export default SecondaryButton;
