@@ -24,7 +24,7 @@ const ModalEnterCode: React.FC<Props> = ({phoneNumber}) => {
 
   const [isCodeWrong, setIsCodeWrong] = useState(false);
 
-  const handleSendButtonClick = ({code}: FormValues) => {
+  const signIn = ({code}: FormValues) => {
     if (code === CODE) {
       setIsAuthenticated(true);
       clearCurrentModal();
@@ -37,8 +37,10 @@ const ModalEnterCode: React.FC<Props> = ({phoneNumber}) => {
     initialValues: {
       code: ''
     },
-    onSubmit: (values) => handleSendButtonClick(values)
+    onSubmit: (values) => signIn(values)
   });
+
+  const {handleSubmit, values, handleChange} = formik;
 
   return (
     <Modal>
@@ -61,14 +63,14 @@ const ModalEnterCode: React.FC<Props> = ({phoneNumber}) => {
               <span className='modal-enter-code__phone-number'><br />{phoneNumber}</span>
             </h6>
 
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
               <div className='modal-enter-code__input'>
                 <Input
                   id='code'
                   name='code'
-                  value={formik.values.code}
-                  onChange={formik.handleChange}
+                  value={values.code}
+                  onChange={handleChange}
                   placeholder='Код'
                   type='text'
                   style={{borderColor: isCodeWrong ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}

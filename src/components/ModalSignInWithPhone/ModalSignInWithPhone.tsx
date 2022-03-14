@@ -39,7 +39,7 @@ const ModalSignInWithPhone: React.FC = () => {
     onSubmit: (values) => sendCode(values)
   });
 
-  const {errors, touched} = formik;
+  const {handleSubmit, values, handleChange, errors, touched} = formik;
 
   return (
     <Modal>
@@ -58,14 +58,14 @@ const ModalSignInWithPhone: React.FC = () => {
 
           <div className='modal-sign-up__body'>
 
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={handleSubmit}>
 
               <div className='modal-sign-up__input'>
                 <Input
                   id='phoneNumber'
                   name='phoneNumber'
-                  value={formik.values.phoneNumber}
-                  onChange={formik.handleChange}
+                  value={values.phoneNumber}
+                  onChange={handleChange}
                   placeholder='Телефон'
                   type='tel'
                   style={{borderColor: errors.phoneNumber && touched.phoneNumber ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}

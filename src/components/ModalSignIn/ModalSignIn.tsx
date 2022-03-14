@@ -31,7 +31,7 @@ const ModalSignIn: React.FC = () => {
 
   const [toShowAlert, setToShowAlert] = useState(false);
 
-  const handleSignIn = ({phoneNumber, password}: FormValues) => {
+  const signIn = ({phoneNumber, password}: FormValues) => {
     if (phoneNumber === PHONE_NUMBER && password === PASSWORD) {
       setIsAuthenticated(true);
       clearCurrentModal();
@@ -46,10 +46,10 @@ const ModalSignIn: React.FC = () => {
       password: ''
     },
     validationSchema: SignInSchema,
-    onSubmit: (values) => handleSignIn(values)
+    onSubmit: (values) => signIn(values)
   });
 
-  const {errors, touched} = formik;
+  const {handleSubmit, values, handleChange, errors, touched} = formik;
 
   return (
     <Modal>
@@ -67,7 +67,7 @@ const ModalSignIn: React.FC = () => {
 
           <div className='modal-authentication__body'>
 
-              <form onSubmit={formik.handleSubmit}>
+              <form onSubmit={handleSubmit}>
 
                 <div className='modal-authentication__inputs'>
 
@@ -75,8 +75,8 @@ const ModalSignIn: React.FC = () => {
                     <Input
                       id='phoneNumber'
                       name='phoneNumber'
-                      value={formik.values.phoneNumber}
-                      onChange={formik.handleChange}
+                      value={values.phoneNumber}
+                      onChange={handleChange}
                       placeholder='Телефон'
                       type='text'
                       style={{borderColor: errors.phoneNumber && touched.phoneNumber ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
@@ -88,8 +88,8 @@ const ModalSignIn: React.FC = () => {
                     <Input
                       id='password'
                       name='password'
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
+                      value={values.password}
+                      onChange={handleChange}
                       placeholder='Пароль'
                       type='password'
                       style={{borderColor: errors.password && touched.password ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
