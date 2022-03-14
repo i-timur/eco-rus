@@ -9,28 +9,36 @@ import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import LinkModal from '../LinkModal/LinkModal';
 import SecondaryButton from '../SecondaryButton/SecondaryButton';
 import {CODE} from '../../utils/data';
+import {useFormik} from 'formik';
 
 interface Props {
   phoneNumber: string;
 }
 
+interface FormValues {
+  code: string;
+}
+
 const ModalEnterCode: React.FC<Props> = ({phoneNumber}) => {
   const {modalStore: {clearCurrentModal}, authorizationStore: {setIsAuthenticated}} = useStore();
 
-  const [code, setCode] = useState('');
   const [isCodeWrong, setIsCodeWrong] = useState(false);
 
-  const handleSendButtonClick = () => {
-    if (CODE === code) {
+  const handleSendButtonClick = ({code}: FormValues) => {
+    if (code === CODE) {
       setIsAuthenticated(true);
       clearCurrentModal();
     } else {
       setIsCodeWrong(true);
-      setTimeout(() => {
-        setIsCodeWrong(false);
-      }, 3000);
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      code: ''
+    },
+    onSubmit: (values) => handleSendButtonClick(values)
+  });
 
   return (
     <Modal>
@@ -53,20 +61,26 @@ const ModalEnterCode: React.FC<Props> = ({phoneNumber}) => {
               <span className='modal-enter-code__phone-number'><br />{phoneNumber}</span>
             </h6>
 
-            <div className='modal-enter-code__input'>
-              <Input
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder='Код'
-                type='text'
-                style={{borderColor: isCodeWrong ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
-              />
-            </div>
-            {isCodeWrong && <span className='modal-enter-code__alert'>Введите действительный код</span>}
+            <form onSubmit={formik.handleSubmit}>
 
-            <div className='modal-enter-code__send-button'>
-              <PrimaryButton onClick={handleSendButtonClick}>Отправить</PrimaryButton>
-            </div>
+              <div className='modal-enter-code__input'>
+                <Input
+                  id='code'
+                  name='code'
+                  value={formik.values.code}
+                  onChange={formik.handleChange}
+                  placeholder='Код'
+                  type='text'
+                  style={{borderColor: isCodeWrong ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
+                />
+              </div>
+              {isCodeWrong && <span className='modal-enter-code__alert'>Введите действительный код</span>}
+
+              <div className='modal-enter-code__send-button'>
+                <PrimaryButton>Отправить</PrimaryButton>
+              </div>
+
+            </form>
 
             <div className='modal-enter-code__link'>
               <LinkModal onClick={() => console.log('Did not get a code')}>Не получил(-а) код</LinkModal>

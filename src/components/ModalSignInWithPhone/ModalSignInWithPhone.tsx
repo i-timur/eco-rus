@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import Modal from '../Modal/Modal';
+import React from 'react';
+import * as Yup from 'yup';
 
+import Modal from '../Modal/Modal';
 import './ModalSignInWithPhone.scss';
 import Icon from '../Icon/Icon';
 import {useStore} from '../../index';
@@ -11,23 +12,34 @@ import SecondaryButton from '../SecondaryButton/SecondaryButton';
 import ModalEnterCode from '../ModalEnterCode/ModalEnterCode';
 import ModalSignIn from '../ModalSignIn/ModalSignIn';
 import {PHONE_NUMBER_REGEXP} from '../../utils/utils';
+import {useFormik} from 'formik';
+
+interface FormValues {
+  phoneNumber: string;
+}
+
+const SignInWithPhoneSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .matches(PHONE_NUMBER_REGEXP, 'Phone number is not valid')
+    .required('Phone number is required')
+});
 
 const ModalSignInWithPhone: React.FC = () => {
   const {modalStore: {clearCurrentModal, setCurrentModal}} = useStore();
 
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [toShowAlert, setToShowAlert] = useState(false);
-
-  const getCode = () => {
-    if (PHONE_NUMBER_REGEXP.test(phoneNumber)) {
+  const sendCode = ({phoneNumber}: FormValues) => {
       setCurrentModal(<ModalEnterCode phoneNumber={phoneNumber} />);
-    } else {
-      setToShowAlert(true);
-      setTimeout(() => {
-        setToShowAlert(false);
-      }, 3000);
-    }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      phoneNumber: ''
+    },
+    validationSchema: SignInWithPhoneSchema,
+    onSubmit: (values) => sendCode(values)
+  });
+
+  const {errors, touched} = formik;
 
   return (
     <Modal>
@@ -46,19 +58,26 @@ const ModalSignInWithPhone: React.FC = () => {
 
           <div className='modal-sign-up__body'>
 
+            <form onSubmit={formik.handleSubmit}>
+
               <div className='modal-sign-up__input'>
                 <Input
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  id='phoneNumber'
+                  name='phoneNumber'
+                  value={formik.values.phoneNumber}
+                  onChange={formik.handleChange}
                   placeholder='Телефон'
                   type='tel'
+                  style={{borderColor: errors.phoneNumber && touched.phoneNumber ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
                 />
               </div>
-            {toShowAlert && <span className='modal-sign-up__alert'>Введите существующий номер телефона</span>}
+              {errors.phoneNumber && touched.phoneNumber && <span className='modal-sign-up__alert'>{errors.phoneNumber}</span>}
 
-            <div className='modal-sign-up__get-code-button'>
-              <PrimaryButton onClick={getCode}>Получить код</PrimaryButton>
-            </div>
+              <div className='modal-sign-up__get-code-button'>
+                <PrimaryButton>Получить код</PrimaryButton>
+              </div>
+
+            </form>
 
             <div className='modal-sign-up__link'>
               <LinkModal onClick={() => setCurrentModal(<ModalSignIn />)}>Я уже зарегистировался(-ась)</LinkModal>

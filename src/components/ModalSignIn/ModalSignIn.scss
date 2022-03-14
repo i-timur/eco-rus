@@ -35,6 +35,14 @@
     }
   }
 
+  &__alert {
+    display: block;
+    margin: 8px 0 0 16px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FF4545;
+  }
+
   &__login-button {
     margin: 32px 0 0 0;
   }

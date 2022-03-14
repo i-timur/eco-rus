@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import * as Yup from 'yup';
+
 import {useStore} from '../../index';
 import Modal from '../Modal/Modal';
 import Icon from '../Icon/Icon';
-
 import './ModalSignIn.scss';
 import Input from '../Input/Input';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
@@ -10,22 +11,45 @@ import SecondaryButton from '../SecondaryButton/SecondaryButton';
 import LinkModal from '../LinkModal/LinkModal';
 import ModalSignInWithPhone from '../ModalSignInWithPhone/ModalSignInWithPhone';
 import {PASSWORD, PHONE_NUMBER} from '../../utils/data';
+import {useFormik} from 'formik';
+import {PHONE_NUMBER_REGEXP} from '../../utils/utils';
+
+interface FormValues {
+  phoneNumber: string;
+  password: string
+}
+
+const SignInSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .matches(PHONE_NUMBER_REGEXP, 'Phone number is not valid')
+    .required('Phone number is required'),
+  password: Yup.string().required('Password is required')
+});
 
 const ModalSignIn: React.FC = () => {
   const {modalStore: {clearCurrentModal, setCurrentModal}, authorizationStore: {setIsAuthenticated}} = useStore();
 
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [toShowAlert, setToShowAlert] = useState(false);
 
-  const handleSignIn = () => {
+  const handleSignIn = ({phoneNumber, password}: FormValues) => {
     if (phoneNumber === PHONE_NUMBER && password === PASSWORD) {
       setIsAuthenticated(true);
       clearCurrentModal();
     } else {
-      setPhoneNumber('');
-      setPassword('');
+      setToShowAlert(true);
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      phoneNumber: '',
+      password: ''
+    },
+    validationSchema: SignInSchema,
+    onSubmit: (values) => handleSignIn(values)
+  });
+
+  const {errors, touched} = formik;
 
   return (
     <Modal>
@@ -43,31 +67,44 @@ const ModalSignIn: React.FC = () => {
 
           <div className='modal-authentication__body'>
 
-            <div className='modal-authentication__inputs'>
+              <form onSubmit={formik.handleSubmit}>
 
-              <div className='modal-authentication__input'>
-                <Input
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder='Телефон'
-                  type='text'
-                />
-              </div>
+                <div className='modal-authentication__inputs'>
 
-              <div className='modal-authentication__input'>
-                <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder='Пароль'
-                  type='password'
-                />
-              </div>
+                  <div className='modal-authentication__input'>
+                    <Input
+                      id='phoneNumber'
+                      name='phoneNumber'
+                      value={formik.values.phoneNumber}
+                      onChange={formik.handleChange}
+                      placeholder='Телефон'
+                      type='text'
+                      style={{borderColor: errors.phoneNumber && touched.phoneNumber ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
+                    />
+                  </div>
+                  {errors.phoneNumber && touched.phoneNumber && <span className='modal-authentication__alert'>{errors.phoneNumber}</span>}
 
-            </div>
+                  <div className='modal-authentication__input'>
+                    <Input
+                      id='password'
+                      name='password'
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      placeholder='Пароль'
+                      type='password'
+                      style={{borderColor: errors.password && touched.password ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
+                    />
+                  </div>
+                  {errors.password && touched.password && <span className='modal-authentication__alert'>{errors.password}</span>}
 
-            <div className='modal-authentication__login-button'>
-              <PrimaryButton onClick={handleSignIn}>Войти</PrimaryButton>
-            </div>
+                </div>
+                {toShowAlert && <span className='modal-authentication__alert'>Введенный вами логин или пароль не верен</span>}
+
+                <div className='modal-authentication__login-button'>
+                  <PrimaryButton>Войти</PrimaryButton>
+                </div>
+
+              </form>
 
             <div className='modal-authentication__links'>
 
