@@ -28,6 +28,10 @@ html, body {
 .container {
   margin: 0 auto;
   max-width: 1200px;
+
+  @media (max-width: 1220px) {
+    padding: 0 10px;
+  }
 }
 
 .bg-green {

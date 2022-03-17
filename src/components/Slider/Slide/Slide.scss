@@ -4,6 +4,10 @@
 
   &__content {
     padding: 56px 0 56px 64px;
+
+    @media (max-width: 1170px) {
+      padding: 20px 0 20px 30px;
+    }
   }
 
   &__image {

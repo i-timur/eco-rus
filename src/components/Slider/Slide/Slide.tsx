@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Slide.scss';
 import SliderButton from '../SliderButton/SliderButton';
-import {getSlideBackgroundColor} from '../../utils/utils';
+import {getSlideBackgroundColor} from '../../../utils/utils';
 
 
 interface Props {

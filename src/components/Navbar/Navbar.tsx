@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import './Navbar.scss';
 import logo from '../../assets/icons/logo.svg';
 import ecoDollar from  '../../assets/icons/eco-dollar.svg';
 import avatarIcon from '../../assets/icons/profile-image.svg';
 import {Link, NavLink} from 'react-router-dom';
-import Icon from '../Icon/Icon';
+import Icon from '../UI/Icon/Icon';
 import {useStore} from '../../index';
 import {observer} from 'mobx-react-lite';
-import ModalSignIn from '../ModalSignIn/ModalSignIn';
+import ModalSignIn from '../Modals/ModalSignIn/ModalSignIn';
 
 const activeClassName = 'navigation__link navigation__link_active';
 const notActiveClassName = 'navigation__link';
@@ -69,8 +69,13 @@ const Navbar: React.FC = observer(() => {
               marginRight: '48px'
             }}
           >
-            <Icon name='pin' color='rgba(0, 11, 38, 0.72)' />
-            Казань
+            <button
+              className='user-navbar__button'
+              onClick={() => setCurrentModal(<ModalSignIn />)}
+            >
+              <Icon name='pin' color='rgba(0, 11, 38, 0.72)' />
+              Казань
+            </button>
           </li>
           {isAuthenticated ? (
             <>
@@ -82,15 +87,20 @@ const Navbar: React.FC = observer(() => {
                   fontWeight: '600'
                 }}
               >
-                <img src={ecoDollar} alt='eco-dollar' />
-                1000
+                <Link
+                  to={`/profile/${userId}`}
+                  className='user-navbar__link'
+                >
+                  <img src={ecoDollar} alt='eco-dollar' />
+                  1000
+                </Link>
               </li>
               <li className='user-navbar__item'>
-                <img src={avatarIcon} alt='avatar' />
                 <Link
                   to={`/profile/${userId}`}
                   className='user-navbar__link'
                   >
+                  <img src={avatarIcon} alt='avatar' />
                   Алексей
                 </Link>
               </li>
@@ -98,11 +108,11 @@ const Navbar: React.FC = observer(() => {
           ) : (
             <>
               <li className='user-navbar__item'>
-                <Icon name='login' color='rgba(0, 11, 38, 0.72)' />
                 <button
                   className='user-navbar__button'
                   onClick={() => setCurrentModal(<ModalSignIn />)}
                   >
+                  <Icon name='login' color='rgba(0, 11, 38, 0.72)' />
                   Войти
                 </button>
               </li>

@@ -5,7 +5,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import mainStore, {MainStore} from './stores/mainStore';
-import ModalConstructor from './components/ModalConstructor/ModalConstructor';
+import ModalConstructor from './components/Modals/ModalConstructor/ModalConstructor';
 
 const StoreContext = createContext<MainStore | null>(null);
 

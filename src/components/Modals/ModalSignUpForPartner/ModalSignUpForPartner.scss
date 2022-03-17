@@ -1,4 +1,4 @@
-.modal-sign-up {
+.modal-sign-up-for-partner {
   &__container {
     width: 480px;
     padding: 48px;
@@ -21,12 +21,18 @@
   }
 
   &__close {
-    background-color: #FFFFFF;
+    background-color:#FFFFFF;
     cursor: pointer;
   }
 
   &__body {
     margin: 48px 0 0 0;
+  }
+
+  &__input {
+    &:not(:first-child) {
+      margin: 24px 0 0 0;
+    }
   }
 
   &__alert {
@@ -37,12 +43,15 @@
     color: #FF4545;
   }
 
-  &__get-code-button {
+  &__login-button {
     margin: 32px 0 0 0;
   }
 
-  &__link {
+  &__links {
     margin: 16px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   &__login-button-for-partners {

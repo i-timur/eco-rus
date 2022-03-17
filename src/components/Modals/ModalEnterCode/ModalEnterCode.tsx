@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 
 import './ModalEnterCode.scss';
 import Modal from '../Modal/Modal';
-import Icon from '../Icon/Icon';
-import {useStore} from '../../index';
-import Input from '../Input/Input';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import LinkModal from '../LinkModal/LinkModal';
-import SecondaryButton from '../SecondaryButton/SecondaryButton';
-import {CODE} from '../../utils/data';
+import Icon from '../../UI/Icon/Icon';
+import {useStore} from '../../../index';
+import Input from '../../UI/Input/Input';
+import PrimaryButton from '../../UI/PrimaryButton/PrimaryButton';
+import LinkModal from '../../UI/LinkModal/LinkModal';
+import SecondaryButton from '../../UI/SecondaryButton/SecondaryButton';
+import {CODE} from '../../../utils/data';
 import {useFormik} from 'formik';
 
 interface Props {

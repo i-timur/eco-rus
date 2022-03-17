@@ -1,6 +1,6 @@
 import React from 'react';
-import {useStore} from '../../index';
-import Portal from '../Portal/Portal';
+import {useStore} from '../../../index';
+import Portal from '../../UI/Portal/Portal';
 
 const Modal: React.FC = ({children}) => {
   const {modalStore: {clearCurrentModal}} = useStore();

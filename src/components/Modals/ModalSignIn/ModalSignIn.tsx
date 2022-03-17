@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import * as Yup from 'yup';
 
-import {useStore} from '../../index';
+import {useStore} from '../../../index';
 import Modal from '../Modal/Modal';
-import Icon from '../Icon/Icon';
+import Icon from '../../UI/Icon/Icon';
 import './ModalSignIn.scss';
-import Input from '../Input/Input';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import SecondaryButton from '../SecondaryButton/SecondaryButton';
-import LinkModal from '../LinkModal/LinkModal';
+import Input from '../../UI/Input/Input';
+import PrimaryButton from '../../UI/PrimaryButton/PrimaryButton';
+import SecondaryButton from '../../UI/SecondaryButton/SecondaryButton';
+import LinkModal from '../../UI/LinkModal/LinkModal';
 import ModalSignInWithPhone from '../ModalSignInWithPhone/ModalSignInWithPhone';
-import {PASSWORD, PHONE_NUMBER} from '../../utils/data';
+import {PASSWORD, PHONE_NUMBER} from '../../../utils/data';
 import {useFormik} from 'formik';
-import {PHONE_NUMBER_REGEXP} from '../../utils/utils';
+import {PHONE_NUMBER_REGEXP} from '../../../utils/utils';
+import ModalSignInForPartner from '../ModalSignInForPartner/ModalSignInForPartner';
 
 interface FormValues {
   phoneNumber: string;
@@ -98,7 +99,7 @@ const ModalSignIn: React.FC = () => {
                   {errors.password && touched.password && <span className='modal-authentication__alert'>{errors.password}</span>}
 
                 </div>
-                {toShowAlert && <span className='modal-authentication__alert'>Введенный вами логин или пароль не верен</span>}
+                {toShowAlert && !(errors.phoneNumber || errors.password) && <span className='modal-authentication__alert'>Введенный вами логин или пароль не верен</span>}
 
                 <div className='modal-authentication__login-button'>
                   <PrimaryButton>Войти</PrimaryButton>
@@ -119,7 +120,7 @@ const ModalSignIn: React.FC = () => {
             </div>
 
             <div className='modal-authentication__login-button-for-partners'>
-              <SecondaryButton onClick={() => console.log('Login button for partners was pressed')}>Вход для партнёров</SecondaryButton>
+              <SecondaryButton onClick={() => setCurrentModal(<ModalSignInForPartner />)}>Вход для партнёров</SecondaryButton>
             </div>
 
           </div>

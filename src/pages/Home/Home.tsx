@@ -11,7 +11,7 @@ import mask from '../../assets/images/masks.png';
 import map from '../../assets/images/map.png';
 import market from '../../assets/images/market.png';
 import Footer from '../../components/Footer/Footer';
-import Slide from '../../components/Slide/Slide';
+import Slide from '../../components/Slider/Slide/Slide';
 import Card from '../../components/Card/Card';
 
 const slides = [

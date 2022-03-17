@@ -3,16 +3,17 @@ import * as Yup from 'yup';
 
 import Modal from '../Modal/Modal';
 import './ModalSignInWithPhone.scss';
-import Icon from '../Icon/Icon';
-import {useStore} from '../../index';
-import Input from '../Input/Input';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
-import LinkModal from '../LinkModal/LinkModal';
-import SecondaryButton from '../SecondaryButton/SecondaryButton';
+import Icon from '../../UI/Icon/Icon';
+import {useStore} from '../../../index';
+import Input from '../../UI/Input/Input';
+import PrimaryButton from '../../UI/PrimaryButton/PrimaryButton';
+import LinkModal from '../../UI/LinkModal/LinkModal';
+import SecondaryButton from '../../UI/SecondaryButton/SecondaryButton';
 import ModalEnterCode from '../ModalEnterCode/ModalEnterCode';
 import ModalSignIn from '../ModalSignIn/ModalSignIn';
-import {PHONE_NUMBER_REGEXP} from '../../utils/utils';
+import {PHONE_NUMBER_REGEXP} from '../../../utils/utils';
 import {useFormik} from 'formik';
+import ModalSignInForPartner from '../ModalSignInForPartner/ModalSignInForPartner';
 
 interface FormValues {
   phoneNumber: string;
@@ -84,7 +85,7 @@ const ModalSignInWithPhone: React.FC = () => {
             </div>
 
             <div className='modal-sign-up__login-button-for-partners'>
-              <SecondaryButton onClick={() => console.log('Login button for partners was pressed')}>Вход для партнёров</SecondaryButton>
+              <SecondaryButton onClick={() => setCurrentModal(<ModalSignInForPartner />)}>Вход для партнёров</SecondaryButton>
             </div>
 
             </div>
