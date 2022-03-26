@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import './Card.scss';
+import './HomeCard.scss';
 
 interface Props {
   title: string;
@@ -10,7 +10,7 @@ interface Props {
   image: string;
 }
 
-const Card: React.FC<Props> = ({title, subtitle, to, image}) => {
+const HomeCard: React.FC<Props> = ({title, subtitle, to, image}) => {
   return (
     <div className='card'>
       <div className='card__content'>
@@ -25,4 +25,4 @@ const Card: React.FC<Props> = ({title, subtitle, to, image}) => {
   );
 };
 
-export default Card;
+export default HomeCard;

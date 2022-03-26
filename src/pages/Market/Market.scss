@@ -1,0 +1,229 @@
+.market {
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    margin: 120px 0 0 0;
+  }
+
+  &__content {
+    flex: 1 1 auto;
+    margin: 40px 0 0 0;
+  }
+
+  &__footer {
+    flex: 0 1 auto;
+    margin: 59px 0 0 0;
+    box-shadow: 0px -0.5px 0px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.header-market {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    text-align: left;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 48px;
+    color: #000000;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+  }
+
+  &__item {
+
+  }
+}
+
+.content-market {
+  &__container {
+    display: flex;
+  }
+
+  &__filter {
+    flex: 0 1 282px;
+    min-width: 282px;
+  }
+
+  &__cards {
+    margin: 0 0 0 47px;
+  }
+
+  &__list {
+    margin: 0 -12px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 48px;
+  }
+
+  &__item {
+    padding: 0 12px;
+    flex: 0 1 33.333%;
+  }
+
+  &__first-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    background: #FFFFFF;
+    border: 1px solid rgba(62, 80, 114, 0.12);
+    box-shadow: 0px 12px 32px rgba(121, 121, 121, 0.12), 0px 4px 24px rgba(21, 45, 103, 0.12);
+    border-radius: 16px;
+  }
+
+  &__balance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 130px 0 0 0;
+    line-height: 18px;
+    letter-spacing: -0.15px;
+    color: #000000;
+  }
+
+  &__balance-amout {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+
+  &__change {
+    margin: 8px 0 0 0;
+    text-align: center;
+    line-height: 18px;
+    letter-spacing: -0.15px;
+    color: rgba(0, 11, 38, 0.56);
+  }
+
+  &__button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 90px 0 0 0;
+    padding: 10px 0;
+    background: #07C88E;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+  }
+}
+
+.filter-market-content {
+  &__container {
+  }
+
+  &__menu {
+    padding: 24px;
+    border: 1px solid rgba(62, 80, 114, 0.16);
+    border-radius: 16px;
+  }
+
+  &__menu-item {
+    &:not(:first-child) {
+      margin: 24px 0 0 0;
+    }
+  }
+
+  &__menu-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 11, 38, 0.8);
+  }
+
+  &__options {
+    margin: 16px 0 0 0;
+  }
+
+  &__option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    column-gap: 9px;
+    margin: 12px 0 0 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 11, 38, 0.72);
+  }
+
+  &__option-button {
+    display: block;
+    width: 18px;
+    height: 20px;
+
+    &_active {
+      opacity: 0;
+    }
+  }
+
+  &__option-label {
+    &_active {
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 18px;
+        height: 18px;
+        background: url('../../assets/icons/checked.svg') center center no-repeat;
+        z-index: 10;
+      }
+    }
+  }
+
+  &__scrollable-checkboxes {
+    position: relative;
+    max-height: 137px;
+    margin: 12px 0 0 0;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    &:before {
+      content: '';
+      display: block;
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 234px;
+      height: 12px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+  }
+
+  &__button-wrapper {
+    margin: 23px 0 0 0;
+  }
+
+  &__button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.25px;
+    color: rgba(0, 11, 38, 0.8);
+    background: rgba(62, 80, 114, 0.08);
+    border-radius: 8px;
+  }
+}

@@ -1,0 +1,43 @@
+.modal-qr-code {
+  max-width: 542px;
+  background: #FFFFFF;
+  border-radius: 24px;
+
+  &__container {
+    padding: 48px;
+  }
+
+  &__title {
+    margin: 0 0 24px 0;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 32px;
+    color: rgba(0, 11, 38, 0.88);
+  }
+
+  &__image {
+
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__code {
+    margin: 24px 0 0 0;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 32px;;
+    text-align: center;
+    color: rgba(0, 11, 38, 0.88);
+  }
+
+  &__info {
+    margin: 24px 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 11, 38, 0.72);
+  }
+}

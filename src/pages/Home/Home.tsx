@@ -5,14 +5,14 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 
 import './Home.scss';
-import recycle from '../../assets/images/recycle.png';
-import plastic from '../../assets/images/plastic.png';
-import mask from '../../assets/images/masks.png';
-import map from '../../assets/images/map.png';
-import market from '../../assets/images/market.png';
+import recycle from '../../assets/images/home/recycle.png';
+import plastic from '../../assets/images/home/plastic.png';
+import mask from '../../assets/images/home/masks.png';
+import map from '../../assets/images/home/map.png';
+import market from '../../assets/images/home/market.png';
 import Footer from '../../components/Footer/Footer';
 import Slide from '../../components/Slider/Slide/Slide';
-import Card from '../../components/Card/Card';
+import HomeCard from '../../components/HomeCard/HomeCard';
 
 const slides = [
   {
@@ -85,7 +85,7 @@ const Home: React.FC = () => {
 
             {cards.map((card, i) => (
               <div className='cards-home__item' key={i}>
-                <Card
+                <HomeCard
                   title={card.title}
                   subtitle={card.subtitle}
                   to={card.link}
