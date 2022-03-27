@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useState} from 'react';
 
 import './Market.scss';
 import MarketCard, {IMarketCard} from '../../components/MarketCard/MarketCard';
@@ -12,11 +12,9 @@ import OrderButton from '../../components/UI/OrderButton/OrderButton';
 import Footer from '../../components/Footer/Footer';
 import {Link} from 'react-router-dom';
 import FilterCheckbox from '../../components/UI/FilterCheckbox/FilterCheckbox';
-import {Field, FieldHookConfig, Form, Formik, FormikProps, useField, useFormik, useFormikContext} from 'formik';
-import {BRANDS, TYPES} from '../../utils/data';
+import {Formik, FormikProps} from 'formik';
 import {useStore} from '../../index';
 import ModalQrCode from '../../components/Modals/ModalQrCode/ModalQrCode';
-import CheckboxGroup from '../../components/CheckboxGroup/CheckboxGroup';
 
 type OrderType = 'popular' | 'price' | 'date';
 
@@ -64,53 +62,6 @@ const cards: IMarketCard[] = [
   },
 ];
 
-const activeInputClassNames = 'filter-market-content__option-button filter-market-content__option-button_active';
-const notActiveInputClassNames = 'filter-market-content__option-button';
-const activeLabelClassNames = 'filter-market-content__option-label filter-market-content__option-label_active';
-const notActiveLabelClassNames = 'filter-market-content__option-label';
-
-const selectAllTypes = (event: React.ChangeEvent<HTMLInputElement>, props: FormikProps<FormikValues>) => {
-  if (props.values.type.includes('all')) {
-    props.setFieldValue('type', []);
-    return;
-  }
-  props.setFieldValue('type', TYPES);
-};
-
-const selectType =  (event: React.ChangeEvent<HTMLInputElement>, props: FormikProps<FormikValues>) => {
-  props.handleChange(event);
-  if (props.values.type.includes('all')) {
-    const newValues = props.values.type.filter((v) => {
-      if (v === 'all' || v === event.target.value) {
-        return false;
-      }
-      return true;
-    });
-    props.setFieldValue('type', newValues);
-  }
-};
-
-const selectAllBrands = (event: React.ChangeEvent<HTMLInputElement>, props: FormikProps<FormikValues>) => {
-  if (props.values.brand.includes('all')) {
-    props.setFieldValue('brand', []);
-    return;
-  }
-  props.setFieldValue('brand', BRANDS);
-};
-
-const selectBrand =  (event: React.ChangeEvent<HTMLInputElement>, props: FormikProps<FormikValues>) => {
-  props.handleChange(event);
-  if (props.values.brand.includes('all')) {
-    const newValues = props.values.brand.filter((v) => {
-      if (v === 'all' || v === event.target.value) {
-        return false;
-      }
-      return true;
-    });
-    props.setFieldValue('brand', newValues);
-  }
-};
-
 const Market: FC = () => {
   const {modalStore: {setCurrentModal}} = useStore();
 
@@ -121,8 +72,6 @@ const Market: FC = () => {
     type: [],
     brand: []
   };
-
-  const [lastToggled, setLastToggled] = useState('');
 
   return (
     <div className='market'>
@@ -174,7 +123,6 @@ const Market: FC = () => {
                 <Formik
                   initialValues={initialValues}
                   onSubmit={() => {}}
-
                 >
                   {(props: FormikProps<FormikValues>) => (
                     <>
@@ -183,47 +131,30 @@ const Market: FC = () => {
                         <div className='filter-market-content__menu-item'>
                           <h4 className='filter-market-content__menu-title'>Пол</h4>
 
-                          <ul className='filter-market-content__options'>
+                            <ul className='filter-market-content__options'>
 
-                            <li className='filter-market-content__option'>
-                              <input
-                                type='checkbox'
-                                value='male'
-                                id='male'
-                                name='sex'
-                                className={props.values.sex.includes('male') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.sex.includes('male')}
-                                onChange={props.handleChange}
-                              />
-                              <label
-                                htmlFor='male'
-                                className={props.values.sex.includes('male') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.sex.includes('male') ? 500 : 400
-                                }}
-                              >Мужской</label>
-                            </li>
+                              <li className='filter-market-content__option'>
+                                <FilterCheckbox
+                                  type='checkbox'
+                                  name='sex'
+                                  value='male'
+                                >
+                                  Мужской
+                                </FilterCheckbox>
+                              </li>
 
-                            <li className='filter-market-content__option'>
-                              <input
-                                type='checkbox'
-                                value='female'
-                                id='female'
-                                name='sex'
-                                className={props.values.sex.includes('female') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.sex.includes('female')}
-                                onChange={props.handleChange}
-                              />
-                              <label
-                                htmlFor='female'
-                                className={props.values.sex.includes('female') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.sex.includes('female') ? 500 : 400
-                                }}
-                              >Женский</label>
-                            </li>
+                              <li className='filter-market-content__option'>
+                                <FilterCheckbox
+                                  type='checkbox'
+                                  name='sex'
+                                  value='female'
+                                >
+                                  Женский
+                                </FilterCheckbox>
+                              </li>
 
-                          </ul>
+                            </ul>
+
                         </div>
 
                         <div className='filter-market-content__menu-item'>
@@ -231,79 +162,43 @@ const Market: FC = () => {
                           <ul className='filter-market-content__options'>
 
                             <li className='filter-market-content__option'>
-                              <input
+                              <FilterCheckbox
                                 type='checkbox'
+                                name='type'
                                 value='all'
-                                id='type-all'
-                                name='type'
-                                className={props.values.type.includes('all') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.type.includes('all')}
-                                onChange={(e) => selectAllTypes(e, props)}
-                              />
-                              <label
-                                htmlFor='type-all'
-                                className={props.values.type.includes('all') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.type.includes('all') ? 500 : 400
-                                }}
-                              >Выбрать все</label>
+                                >
+                                  Выбрать все
+                              </FilterCheckbox>
                             </li>
 
                             <li className='filter-market-content__option'>
-                              <input
+                              <FilterCheckbox
                                 type='checkbox'
+                                name='type'
                                 value='wear'
-                                id='wear'
-                                name='type'
-                                className={props.values.type.includes('wear') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.type.includes('wear')}
-                                onChange={(e) => selectType(e, props)}
-                              />
-                              <label
-                                htmlFor='wear'
-                                className={props.values.type.includes('wear') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.type.includes('wear') ? 500 : 400
-                                }}
-                              >Одежда</label>
+                              >
+                                Одежда
+                              </FilterCheckbox>
                             </li>
 
                             <li className='filter-market-content__option'>
-                              <input
+                              <FilterCheckbox
                                 type='checkbox'
+                                name='type'
                                 value='shoes'
-                                id='shoes'
-                                name='type'
-                                className={props.values.type.includes('shoes') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.type.includes('shoes')}
-                                onChange={(e) => selectType(e, props)}
-                              />
-                              <label
-                                htmlFor='shoes'
-                                className={props.values.type.includes('shoes') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.type.includes('shoes') ? 500 : 400
-                                }}
-                              >Обувь</label>
+                              >
+                                Обувь
+                              </FilterCheckbox>
                             </li>
 
                             <li className='filter-market-content__option'>
-                              <input
+                              <FilterCheckbox
                                 type='checkbox'
-                                value='accessories'
-                                id='accessories'
                                 name='type'
-                                className={props.values.type.includes('accessories') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.type.includes('accessories')}
-                                onChange={(e) => selectType(e, props)}
-                              />
-                              <label
-                                htmlFor='accessories'
-                                className={props.values.type.includes('accessories') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.type.includes('accessories') ? 500 : 400
-                                }}
-                              >Аксессуары</label>
+                                value='accessories'
+                              >
+                                Аксессуары
+                              </FilterCheckbox>
                             </li>
 
                           </ul>
@@ -314,232 +209,124 @@ const Market: FC = () => {
                           <ul className='filter-market-content__options'>
 
                             <li className='filter-market-content__option'>
-                              <input
+                              <FilterCheckbox
                                 type='checkbox'
-                                value='all'
-                                id='brand-all'
                                 name='brand'
-                                className={props.values.brand.includes('all') ? activeInputClassNames : notActiveInputClassNames}
-                                checked={props.values.brand.includes('all')}
-                                onChange={(e) => selectAllBrands(e, props)}
-                              />
-                              <label
-                                htmlFor='brand-all'
-                                className={props.values.brand.includes('all') ? activeLabelClassNames : notActiveLabelClassNames}
-                                style={{
-                                  fontWeight: props.values.brand.includes('all') ? 500 : 400
-                                }}
-                              >Выбрать все</label>
+                                value='all'
+                              >
+                                Выбрать все
+                              </FilterCheckbox>
                             </li>
 
                             <div className='filter-market-content__scrollable-checkboxes'>
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='HM'
-                                  id='HM'
-                                  name='brand'
-                                  className={props.values.brand.includes('HM') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('HM')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='HM'
-                                  className={props.values.brand.includes('HM') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('HM') ? 500 : 400
-                                  }}
-                                >H&M</label>
+                                >
+                                  H&M
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='PB'
-                                  id='PB'
-                                  name='brand'
-                                  className={props.values.brand.includes('PB') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('PB')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='PB'
-                                  className={props.values.brand.includes('PB') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('PB') ? 500 : 400
-                                  }}
-                                >P&B</label>
+                                >
+                                  P&B
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Adidas'
-                                  id='Adidas'
-                                  name='brand'
-                                  className={props.values.brand.includes('Adidas') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Adidas')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Adidas'
-                                  className={props.values.brand.includes('Adidas') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Adidas') ? 500 : 400
-                                  }}
-                                >Adidas</label>
+                                >
+                                  Adidas
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Nike'
-                                  id='Nike'
-                                  name='brand'
-                                  className={props.values.brand.includes('Nike') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Nike')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Nike'
-                                  className={props.values.brand.includes('Nike') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Nike') ? 500 : 400
-                                  }}
-                                >Nike</label>
+                                >
+                                  Nike
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Reebok'
-                                  id='Reebok'
-                                  name='brand'
-                                  className={props.values.brand.includes('Reebok') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Reebok')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Reebok'
-                                  className={props.values.brand.includes('Reebok') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Reebok') ? 500 : 400
-                                  }}
-                                >Reebok</label>
+                                >
+                                  Reebok
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='BOSS'
-                                  id='BOSS'
-                                  name='brand'
-                                  className={props.values.brand.includes('BOSS') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('BOSS')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='BOSS'
-                                  className={props.values.brand.includes('BOSS') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('BOSS') ? 500 : 400
-                                  }}
-                                >BOSS</label>
+                                >
+                                  BOSS
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Guess'
-                                  id='Guess'
-                                  name='brand'
-                                  className={props.values.brand.includes('Guess') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Guess')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Guess'
-                                  className={props.values.brand.includes('Guess') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Guess') ? 500 : 400
-                                  }}
-                                >Guess</label>
+                                >
+                                  Guess
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Moschino'
-                                  id='Moschino'
-                                  name='brand'
-                                  className={props.values.brand.includes('Moschino') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Moschino')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Moschino'
-                                  className={props.values.brand.includes('Moschino') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Moschino') ? 500 : 400
-                                  }}
-                                >Moschino</label>
+                                >
+                                  Moschino
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='DKNY'
-                                  id='DKNY'
-                                  name='brand'
-                                  className={props.values.brand.includes('DKNY') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('DKNY')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='DKNY'
-                                  className={props.values.brand.includes('DKNY') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('DKNY') ? 500 : 400
-                                  }}
-                                >DKNY</label>
+                                >
+                                  DKNY
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
+                                  name='brand'
                                   value='Versace'
-                                  id='Versace'
-                                  name='brand'
-                                  className={props.values.brand.includes('Versace') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Versace')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Versace'
-                                  className={props.values.brand.includes('Versace') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Versace') ? 500 : 400
-                                  }}
-                                >Versace</label>
+                                >
+                                  Versace
+                                </FilterCheckbox>
                               </li>
 
                               <li className='filter-market-content__option'>
-                                <input
+                                <FilterCheckbox
                                   type='checkbox'
-                                  value='Versus'
-                                  id='Versus'
                                   name='brand'
-                                  className={props.values.brand.includes('Versus') ? activeInputClassNames : notActiveInputClassNames}
-                                  checked={props.values.brand.includes('Versus')}
-                                  onChange={(e) => selectBrand(e, props)}
-                                />
-                                <label
-                                  htmlFor='Versus'
-                                  className={props.values.brand.includes('Versus') ? activeLabelClassNames : notActiveInputClassNames}
-                                  style={{
-                                    fontWeight: props.values.brand.includes('Versus') ? 500 : 400
-                                  }}
-                                >Versus</label>
+                                  value='Versus'
+                                >
+                                  Versus
+                                </FilterCheckbox>
                               </li>
                             </div>
 

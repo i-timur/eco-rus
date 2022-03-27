@@ -162,32 +162,6 @@
     color: rgba(0, 11, 38, 0.72);
   }
 
-  &__option-button {
-    display: block;
-    width: 18px;
-    height: 20px;
-
-    &_active {
-      opacity: 0;
-    }
-  }
-
-  &__option-label {
-    &_active {
-      &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        width: 18px;
-        height: 18px;
-        background: url('../../assets/icons/checked.svg') center center no-repeat;
-        z-index: 10;
-      }
-    }
-  }
-
   &__scrollable-checkboxes {
     position: relative;
     max-height: 137px;
