@@ -22,3 +22,17 @@ export const TYPES = [
   'shoes',
   'accessories'
 ];
+export const SHOPS = [
+  'all',
+  'HM',
+  'PB',
+  'Adidas',
+  'Nike',
+  'Reebok'
+];
+export const MATERIALS = [
+  'all',
+  'material1',
+  'material2',
+  'material3',
+];

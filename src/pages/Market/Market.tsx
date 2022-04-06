@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {ChangeEvent, FC, useState} from 'react';
 
 import './Market.scss';
 import MarketCard, {IMarketCard} from '../../components/MarketCard/MarketCard';
@@ -15,6 +15,7 @@ import FilterCheckbox from '../../components/UI/FilterCheckbox/FilterCheckbox';
 import {Formik, FormikProps} from 'formik';
 import {useStore} from '../../index';
 import ModalQrCode from '../../components/Modals/ModalQrCode/ModalQrCode';
+import {customOnChange, getAllGroup} from '../../utils/utils';
 
 type OrderType = 'popular' | 'price' | 'date';
 
@@ -26,7 +27,7 @@ export interface FormikValues extends Record<string, string[]> {
 
 const cards: IMarketCard[] = [
   {
-  name: 'Nike Air Max 2021',
+    name: 'Nike Air Max 2021',
     category: 'Мужская обувь',
     brand: 'NIKE',
     price: 1000,
@@ -122,7 +123,8 @@ const Market: FC = () => {
 
                 <Formik
                   initialValues={initialValues}
-                  onSubmit={() => {}}
+                  onSubmit={() => {
+                  }}
                 >
                   {(props: FormikProps<FormikValues>) => (
                     <>
@@ -131,29 +133,31 @@ const Market: FC = () => {
                         <div className='filter-market-content__menu-item'>
                           <h4 className='filter-market-content__menu-title'>Пол</h4>
 
-                            <ul className='filter-market-content__options'>
+                          <ul className='filter-market-content__options'>
 
-                              <li className='filter-market-content__option'>
-                                <FilterCheckbox
-                                  type='checkbox'
-                                  name='sex'
-                                  value='male'
-                                >
-                                  Мужской
-                                </FilterCheckbox>
-                              </li>
+                            <li className='filter-market-content__option'>
+                              <FilterCheckbox
+                                type='checkbox'
+                                name='sex'
+                                value='male'
+                                onChange={() => {}}
+                              >
+                                Мужской
+                              </FilterCheckbox>
+                            </li>
 
-                              <li className='filter-market-content__option'>
-                                <FilterCheckbox
-                                  type='checkbox'
-                                  name='sex'
-                                  value='female'
-                                >
-                                  Женский
-                                </FilterCheckbox>
-                              </li>
+                            <li className='filter-market-content__option'>
+                              <FilterCheckbox
+                                type='checkbox'
+                                name='sex'
+                                value='female'
+                                onChange={() => {}}
+                              >
+                                Женский
+                              </FilterCheckbox>
+                            </li>
 
-                            </ul>
+                          </ul>
 
                         </div>
 
@@ -166,8 +170,9 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='type'
                                 value='all'
-                                >
-                                  Выбрать все
+                                onCheck={customOnChange}
+                              >
+                                Выбрать все
                               </FilterCheckbox>
                             </li>
 
@@ -176,6 +181,7 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='type'
                                 value='wear'
+                                onCheck={customOnChange}
                               >
                                 Одежда
                               </FilterCheckbox>
@@ -186,6 +192,7 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='type'
                                 value='shoes'
+                                onCheck={customOnChange}
                               >
                                 Обувь
                               </FilterCheckbox>
@@ -196,6 +203,7 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='type'
                                 value='accessories'
+                                onCheck={customOnChange}
                               >
                                 Аксессуары
                               </FilterCheckbox>
@@ -213,6 +221,7 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='brand'
                                 value='all'
+                                onCheck={customOnChange}
                               >
                                 Выбрать все
                               </FilterCheckbox>
@@ -224,6 +233,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='HM'
+                                  onCheck={customOnChange}
                                 >
                                   H&M
                                 </FilterCheckbox>
@@ -234,6 +244,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='PB'
+                                  onCheck={customOnChange}
                                 >
                                   P&B
                                 </FilterCheckbox>
@@ -244,6 +255,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Adidas'
+                                  onCheck={customOnChange}
                                 >
                                   Adidas
                                 </FilterCheckbox>
@@ -254,6 +266,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Nike'
+                                  onCheck={customOnChange}
                                 >
                                   Nike
                                 </FilterCheckbox>
@@ -264,6 +277,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Reebok'
+                                  onCheck={customOnChange}
                                 >
                                   Reebok
                                 </FilterCheckbox>
@@ -274,6 +288,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='BOSS'
+                                  onCheck={customOnChange}
                                 >
                                   BOSS
                                 </FilterCheckbox>
@@ -284,6 +299,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Guess'
+                                  onCheck={customOnChange}
                                 >
                                   Guess
                                 </FilterCheckbox>
@@ -294,6 +310,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Moschino'
+                                  onCheck={customOnChange}
                                 >
                                   Moschino
                                 </FilterCheckbox>
@@ -304,6 +321,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='DKNY'
+                                  onCheck={customOnChange}
                                 >
                                   DKNY
                                 </FilterCheckbox>
@@ -314,6 +332,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Versace'
+                                  onCheck={customOnChange}
                                 >
                                   Versace
                                 </FilterCheckbox>
@@ -324,6 +343,7 @@ const Market: FC = () => {
                                   type='checkbox'
                                   name='brand'
                                   value='Versus'
+                                  onCheck={customOnChange}
                                 >
                                   Versus
                                 </FilterCheckbox>
@@ -362,7 +382,7 @@ const Market: FC = () => {
                   <div className='content-market__first-card'>
                     <p className='content-market__balance'>
                       На вашем балансе&nbsp;
-                      <img src={ecoDollar} alt='eco-dollar' />&nbsp;
+                      <img src={ecoDollar} alt='eco-dollar'/>&nbsp;
                       <span className='content-market__balance-amount'>200</span>
                     </p>
                     <p className='content-market__change'>
@@ -371,7 +391,7 @@ const Market: FC = () => {
                     <button
                       className='content-market__button'
                       type='button'
-                      onClick={() => setCurrentModal(<ModalQrCode />)}
+                      onClick={() => setCurrentModal(<ModalQrCode/>)}
                     >
                       Получить промокод
                     </button>
@@ -404,7 +424,7 @@ const Market: FC = () => {
         </div>
 
         <div className='market__footer'>
-          <Footer />
+          <Footer/>
         </div>
 
       </div>
