@@ -42,8 +42,19 @@
   }
 
   &__link_active {
-    border-bottom-color: #07C88E;
+    position: relative;
     color: #000B26;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #07C88E;
+      border-radius: 5px;
+    }
   }
 }
 

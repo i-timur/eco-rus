@@ -1,0 +1,65 @@
+.leaflet-container {
+  width: 100%;
+  height: calc(100vh - 81px);
+}
+
+.map {
+  &__container {
+    position: relative;
+    margin: 81px 0 0 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__controls {
+    position: absolute;
+    top: 32px;
+    left: calc((100% - 1200px) / 2);
+    width: 1200px;
+    z-index: 1000;
+  }
+
+  &__cards {
+    position: absolute;
+    top: 112px;
+    left: calc((100% - 1200px) / 2);
+    width: 384px;
+    max-height: calc(100vh - 81px - 112px);
+    overflow: hidden;
+    overflow-y: scroll;
+    z-index: 1000;
+  }
+}
+
+.controls-map {
+  &__container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &__search-bar {
+    flex: 0 1 600px;
+  }
+
+  &__select {
+    width: 280px;
+  }
+
+  &__select-placeholder {
+    color: rgba(0, 11, 38, 0.48);
+  }
+}
+
+.cards-map {
+  &__container {
+  }
+  &__card {
+
+    width: 384px;
+
+    &:not(:first-child) {
+      margin: 8px 0 0 0;
+    }
+  }
+}
