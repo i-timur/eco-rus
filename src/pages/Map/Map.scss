@@ -23,7 +23,7 @@
     position: absolute;
     top: 112px;
     left: calc((100% - 1200px) / 2);
-    width: 384px;
+    max-width: 384px;
     max-height: calc(100vh - 81px - 112px);
     overflow: hidden;
     overflow-y: scroll;
@@ -33,17 +33,18 @@
 
 .controls-map {
   &__container {
+    max-width: 100%;
     display: flex;
     align-items: center;
     column-gap: 20px;
   }
 
   &__search-bar {
-    flex: 0 1 600px;
+    flex: 1 1 600px;
   }
 
   &__select {
-    width: 280px;
+    flex: 1 1 280px;
   }
 
   &__select-placeholder {

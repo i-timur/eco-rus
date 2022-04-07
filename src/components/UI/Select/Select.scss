@@ -20,13 +20,14 @@
     font-size: 14px;
     line-height: 20px;
     color: #000B26;
+    white-space: nowrap;
   }
 
   &__list {
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
-    width: 100%;
+    width: 315px;
     padding: 10px 20px;
     background: #FFFFFF;
     border-radius: 12px;
