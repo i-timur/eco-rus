@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import * as Yup from 'yup';
 
 import Modal from '../Modal/Modal';

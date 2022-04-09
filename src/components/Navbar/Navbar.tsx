@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './Navbar.scss';
 import logo from '../../assets/icons/logo.svg';
 import ecoDollar from  '../../assets/icons/eco-dollar.svg';
 import avatarIcon from '../../assets/icons/profile-image.svg';
@@ -9,14 +8,30 @@ import Icon from '../UI/Icon/Icon';
 import {useStore} from '../../index';
 import {observer} from 'mobx-react-lite';
 import ModalSignIn from '../Modals/ModalSignIn/ModalSignIn';
+import './Navbar.scss';
 
 const activeClassName = 'navigation__link navigation__link_active';
 const notActiveClassName = 'navigation__link';
 
-const userId = 1;
-
 const Navbar: React.FC = observer(() => {
-  const {modalStore: {setCurrentModal}, authorizationStore: {isAuthenticated}} = useStore();
+  const {modalStore: {setCurrentModal}, authorizationStore: {isAuthenticated}, userStore} = useStore();
+
+  const userId = userStore.getUser() ? userStore.getUser()?.getId() : undefined;
+  const userName = userStore.getUser() ? userStore.getUser()?.getUserName() : 'Loading...';
+  const getUserBalance = () => {
+    if (userStore.getState() === 'done') {
+      if (userStore.getUser()?.getRole() === 'USER') {
+        const balance = userStore.getUser()?.getBalance();
+        if (balance) {
+          return balance;
+        } else {
+          return 0;
+        }
+      } else {
+        return 0;
+      }
+    }
+  };
 
   return (
     <div className='navbar'>
@@ -69,10 +84,7 @@ const Navbar: React.FC = observer(() => {
               marginRight: '48px'
             }}
           >
-            <button
-              className='user-navbar__button'
-              onClick={() => setCurrentModal(<ModalSignIn />)}
-            >
+            <button className='user-navbar__button'>
               <Icon name='pin' color='rgba(0, 11, 38, 0.72)' />
               Казань
             </button>
@@ -92,7 +104,7 @@ const Navbar: React.FC = observer(() => {
                   className='user-navbar__link'
                 >
                   <img src={ecoDollar} alt='eco-dollar' />
-                  1000
+                  {getUserBalance()}
                 </Link>
               </li>
               <li className='user-navbar__item'>
@@ -101,7 +113,7 @@ const Navbar: React.FC = observer(() => {
                   className='user-navbar__link'
                   >
                   <img src={avatarIcon} alt='avatar' />
-                  Алексей
+                  {userName}
                 </Link>
               </li>
             </>

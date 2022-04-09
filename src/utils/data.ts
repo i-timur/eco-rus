@@ -36,3 +36,5 @@ export const MATERIALS = [
   'material2',
   'material3',
 ];
+
+export const API_URL = 'https://ecoapp.cloud.technokratos.com/eco-rus/api/v1';

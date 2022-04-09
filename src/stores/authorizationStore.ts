@@ -3,8 +3,7 @@ import {makeAutoObservable} from 'mobx';
 
 export class AuthorizationStore {
   mainStore: MainStore;
-
-  isAuthenticated: boolean | null = null;
+  isAuthenticated: boolean;
 
   constructor(mainStore: MainStore) {
     makeAutoObservable(this);
