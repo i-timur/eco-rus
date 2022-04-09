@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 
-import './ModalSignUpForPartner.scss';
+import './ModalRegistration.scss';
 import {useStore} from '../../../index';
 import Modal from '../Modal/Modal';
 import Icon from '../../UI/Icon/Icon';
@@ -15,19 +15,17 @@ import {getHttpClient} from '../../../utils/utils';
 import ModalSignIn from '../ModalSignIn/ModalSignIn';
 
 interface FormValues {
-  companyName: string;
-  email: string;
+  userName: string;
+  phoneNumber: string;
   password: string
 }
 
 const SignUpSchema = Yup.object().shape({
-  companyName: Yup.string().required(),
-  email: Yup.string()
-    .email()
-    .required('Email is required'),
+  userName: Yup.string().required(),
+  phoneNumber: Yup.string()
+    .required('Phone number is required'),
   password: Yup.string().required('Password is required')
 });
-
 
 const ModalSignUpForPartner = () => {
   const {modalStore: {clearCurrentModal, setCurrentModal}, userStore: {authorize}} = useStore();
@@ -45,19 +43,19 @@ const ModalSignUpForPartner = () => {
 
 
   const signUp = (values: FormValues) => {
-   http.post('/account', {
-     phone_number: values.email,
-     password: values.password,
-     username: values.companyName
-   })
-     //@ts-ignore
-     .then(signUpSuccess, signUpFailure)
+    http.post('/account', {
+      phone_number: values.phoneNumber,
+      password: values.password,
+      username: values.userName
+    })
+      //@ts-ignore
+      .then(signUpSuccess, signUpFailure)
   };
 
   const formik = useFormik({
     initialValues: {
-      companyName: '',
-      email: '',
+      userName: '',
+      phoneNumber: '',
       password: ''
     },
     validationSchema: SignUpSchema,
@@ -68,51 +66,51 @@ const ModalSignUpForPartner = () => {
 
   return (
     <Modal>
-      <div className='modal-sign-up-for-partner'>
-        <div className='modal-sign-up-for-partner__container'>
+      <div className='modal-registration'>
+        <div className='modal-registration__container'>
 
-          <div className='modal-sign-up-for-partner__header'>
-            <h2 className='modal-sign-up-for-partner__title'>Регистрация</h2>
+          <div className='modal-registration__header'>
+            <h2 className='modal-registration__title'>Регистрация</h2>
             <button
-              className='modal-sign-up-for-partner__close'
+              className='modal-registration__close'
               type='button'
               onClick={() => clearCurrentModal()}
             ><Icon name='close' color='rgba(0, 11, 38, 0.72)' size={32} /></button>
           </div>
 
-          <div className='modal-sign-up-for-partner__body'>
+          <div className='modal-registration__body'>
 
             <form onSubmit={handleSubmit}>
 
-              <div className='modal-sign-up-for-partner__inputs'>
+              <div className='modal-registration__inputs'>
 
-                <div className='modal-sign-up-for-partner__input'>
+                <div className='modal-registration__input'>
                   <Input
-                    id='companyName'
-                    name='companyName'
-                    value={values.companyName}
+                    id='userName'
+                    name='userName'
+                    value={values.userName}
                     onChange={handleChange}
-                    placeholder='Наименование организации'
+                    placeholder='Имя пользователя'
                     type='text'
-                    style={{borderColor: errors.companyName && touched.companyName ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
+                    style={{borderColor: errors.userName && touched.userName ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
                   />
                 </div>
-                {errors.companyName && touched.companyName && <span className='modal-sign-up-for-partner__alert'>{errors.companyName}</span>}
+                {errors.userName && touched.userName && <span className='modal-registration__alert'>{errors.userName}</span>}
 
                 <div className='modal-sign-in-for-partner__input'>
                   <Input
-                    id='email'
-                    name='email'
-                    value={values.email}
+                    id='phoneNumber'
+                    name='phoneNumber'
+                    value={values.phoneNumber}
                     onChange={handleChange}
-                    placeholder='Email'
+                    placeholder='Номер телефона'
                     type='text'
-                    style={{borderColor: errors.email && touched.email ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
+                    style={{borderColor: errors.phoneNumber && touched.phoneNumber ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
                   />
                 </div>
-                {errors.email && touched.email && <span className='modal-sign-in-for-partner__alert'>{errors.email}</span>}
+                {errors.phoneNumber && touched.phoneNumber && <span className='modal-sign-in-for-partner__alert'>{errors.phoneNumber}</span>}
 
-                <div className='modal-sign-up-for-partner__input'>
+                <div className='modal-registration__input'>
                   <Input
                     id='password'
                     name='password'
@@ -123,27 +121,27 @@ const ModalSignUpForPartner = () => {
                     style={{borderColor: errors.password && touched.password ? '#FF4545' : 'rgba(0, 11, 38, 0.16)'}}
                   />
                 </div>
-                {errors.password && touched.password && <span className='modal-sign-up-for-partner__alert'>{errors.password}</span>}
+                {errors.password && touched.password && <span className='modal-registration__alert'>{errors.password}</span>}
 
               </div>
-              {toShowAlert && !(errors.companyName || errors.email || errors.password) && <span className='modal-sign-up-for-partner__alert'>Введенный вами email уже используется</span>}
+              {toShowAlert && !(errors.userName || errors.phoneNumber || errors.password) && <span className='modal-registration__alert'>Введенный вами email уже используется</span>}
 
 
-              <div className='modal-sign-up-for-partner__login-button'>
-                <PrimaryButton>Войти</PrimaryButton>
+              <div className='modal-registration__login-button'>
+                <PrimaryButton>Зарегистрироваться</PrimaryButton>
               </div>
 
             </form>
 
-            <div className='modal-sign-up-for-partner__links'>
+            <div className='modal-registration__links'>
 
-              <div className='modal-sign-up-for-partner__link'>
+              <div className='modal-registration__link'>
                 <LinkModal onClick={() => setCurrentModal(<ModalSignInForPartner />)}>Я уже зарегистировался(-ась)</LinkModal>
               </div>
 
             </div>
 
-            <div className='modal-sign-up-for-partner__login-button-for-partners'>
+            <div className='modal-registration__login-button-for-partners'>
               <SecondaryButton onClick={() => setCurrentModal(<ModalSignInForPartner />)}>Вход для партнёров</SecondaryButton>
             </div>
 

@@ -10,10 +10,11 @@ import PrimaryButton from '../../UI/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../../UI/SecondaryButton/SecondaryButton';
 import LinkModal from '../../UI/LinkModal/LinkModal';
 import ModalSignInWithPhone from '../ModalSignInWithPhone/ModalSignInWithPhone';
-import {PASSWORD, PHONE_NUMBER} from '../../../utils/data';
 import {useFormik} from 'formik';
-import {PHONE_NUMBER_REGEXP} from '../../../utils/utils';
+import {getHttpClient, PHONE_NUMBER_REGEXP} from '../../../utils/utils';
 import ModalSignInForPartner from '../ModalSignInForPartner/ModalSignInForPartner';
+import {UserDto} from '../../../dtos/UserDto';
+import ModalRegistration from '../ModalRegistration/ModalRegistration';
 
 interface FormValues {
   phoneNumber: string;
@@ -27,18 +28,28 @@ const SignInSchema = Yup.object().shape({
   password: Yup.string().required('Password is required')
 });
 
+
+
 const ModalSignIn: React.FC = () => {
-  const {modalStore: {clearCurrentModal, setCurrentModal}, authorizationStore: {setIsAuthenticated}} = useStore();
+  const {modalStore: {clearCurrentModal, setCurrentModal}, authorizationStore: {setIsAuthenticated}, userStore: {authorize}} = useStore();
 
   const [toShowAlert, setToShowAlert] = useState(false);
 
+  const http = getHttpClient();
+
+  const signInSuccess = (user: UserDto) => {
+    authorize(user.token!);
+    clearCurrentModal();
+  };
+
+
   const signIn = ({phoneNumber, password}: FormValues) => {
-    if (phoneNumber === PHONE_NUMBER && password === PASSWORD) {
-      setIsAuthenticated(true);
-      clearCurrentModal();
-    } else {
-      setToShowAlert(true);
-    }
+    http.post('/login', {
+        login: phoneNumber,
+        password: password
+      })
+      //@ts-ignore
+      .then(signInSuccess);
   };
 
   const formik = useFormik({
@@ -114,7 +125,7 @@ const ModalSignIn: React.FC = () => {
               </div>
 
               <div className='modal-authentication__link'>
-                <LinkModal onClick={() => setCurrentModal(<ModalSignInWithPhone />)}>Регистрация</LinkModal>
+                <LinkModal onClick={() => setCurrentModal(<ModalRegistration />)}>Регистрация</LinkModal>
               </div>
 
             </div>

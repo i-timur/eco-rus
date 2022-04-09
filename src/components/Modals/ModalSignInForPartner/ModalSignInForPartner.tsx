@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 
 import './ModalSignInForPartner.scss';
 import {useStore} from '../../../index';
-import {EMAIL, PASSWORD} from '../../../utils/data';
 import Modal from '../Modal/Modal';
 import Icon from '../../UI/Icon/Icon';
 import Input from '../../UI/Input/Input';
@@ -12,6 +11,8 @@ import PrimaryButton from '../../UI/PrimaryButton/PrimaryButton';
 import LinkModal from '../../UI/LinkModal/LinkModal';
 import ModalSignInWithPhone from '../ModalSignInWithPhone/ModalSignInWithPhone';
 import ModalSignUpForPartner from '../ModalSignUpForPartner/ModalSignUpForPartner';
+import {getHttpClient} from '../../../utils/utils';
+import {UserDto} from '../../../dtos/UserDto';
 
 interface FormValues {
   email: string;
@@ -26,17 +27,25 @@ const SignInSchema = Yup.object().shape({
 });
 
 const ModalSignInForPartner = () => {
-  const {modalStore: {clearCurrentModal, setCurrentModal}, authorizationStore: {setIsAuthenticated}} = useStore();
+  const {modalStore: {clearCurrentModal, setCurrentModal}, userStore: {authorize}} = useStore();
 
   const [toShowAlert, setToShowAlert] = useState(false);
 
+  const http = getHttpClient();
+
+  const signInSuccess = (user: UserDto) => {
+    authorize(user.token!);
+    clearCurrentModal();
+  };
+
+
   const signIn = ({email, password}: FormValues) => {
-    if (email === EMAIL && password === PASSWORD) {
-      setIsAuthenticated(true);
-      clearCurrentModal();
-    } else {
-      setToShowAlert(true);
-    }
+    http.post('/login', {
+      email,
+      password
+    })
+      //@ts-ignore
+      .then(signInSuccess);
   };
 
   const formik = useFormik({

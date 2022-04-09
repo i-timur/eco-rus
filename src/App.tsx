@@ -10,6 +10,7 @@ import MapCardDetails from './components/MapCardDetails/MapCardDetails';
 import MapCards from './components/MapCards/MapCards';
 
 const App = () => {
+  
   return (
     <>
       <Navbar />
