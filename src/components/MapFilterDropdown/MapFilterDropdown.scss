@@ -1,0 +1,42 @@
+.map-filter-dropdown {
+  &__container {
+    padding: 0 24px;
+  }
+
+  &__control-btns {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+
+  &__control-btn {
+
+  }
+
+  &__group {
+    &:not(:first-child) {
+      margin: 24px 0 0 0;
+    }
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(0, 11, 38, 0.8);
+  }
+
+  &__list {
+    margin: 12px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+
+  &__item {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(0, 11, 38, 0.72);
+  }
+}

@@ -19,6 +19,8 @@ ol {
 }
 
 html, body {
+  height: 100%;
+  overflow-x: hidden;
   font-family: 'Inter', sans-serif;
   line-height: 1;
   font-weight: 400;
@@ -58,4 +60,8 @@ html, body {
   align-items: center;
   background-color: rgba(53,53,53, 0.6);
   z-index: 1001;
+}
+
+.hide {
+  display: none !important;
 }

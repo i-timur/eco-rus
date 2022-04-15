@@ -18,8 +18,10 @@ const Slide: React.FC<Props> = ({index, title, subtitle, buttonValue, buttonTo, 
   return (
     <div className={`slide ${getSlideBackgroundColor(index)}`}>
       <div className='slide__content'>
-        <h1 className='slide__title'>{title}</h1>
-        <h3 className='slide__subtitle'>{subtitle}</h3>
+        <div className="slide__upper">
+          <h1 className='slide__title'>{title}</h1>
+          <h3 className='slide__subtitle'>{subtitle}</h3>
+        </div>
         <div className='slide__button'>
           <SliderButton to={buttonTo}>{buttonValue}</SliderButton>
         </div>

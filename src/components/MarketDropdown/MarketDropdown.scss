@@ -1,0 +1,32 @@
+.market-dropdown {
+  display: none;
+  overflow: auto;
+
+  @media (max-width: 959px) {
+    display: block;
+  }
+
+  &__order-btns {
+    margin: 19px 0 0 0;
+    padding: 0 0 0 24px;
+    display: flex;
+    column-gap: 12px;
+    overflow: auto;
+  }
+
+  &__control-btns {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+  }
+
+  &__control-btn {
+    max-height: 48px;
+  }
+
+  &__filters {
+    margin: 24px 0 0 0;
+    padding: 0 24px;
+  }
+}
+

@@ -1,4 +1,5 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {FC, useState} from 'react';
+import {Link} from 'react-router-dom';
 
 import './Market.scss';
 import MarketCard, {IMarketCard} from '../../components/MarketCard/MarketCard';
@@ -10,14 +11,14 @@ import image4 from '../../assets/images/market/image4.png';
 import image5 from '../../assets/images/market/image5.png';
 import OrderButton from '../../components/UI/OrderButton/OrderButton';
 import Footer from '../../components/Footer/Footer';
-import {Link} from 'react-router-dom';
 import FilterCheckbox from '../../components/UI/FilterCheckbox/FilterCheckbox';
 import {Formik, FormikProps} from 'formik';
 import {useStore} from '../../index';
 import ModalQrCode from '../../components/Modals/ModalQrCode/ModalQrCode';
-import {customOnChange, getAllGroup} from '../../utils/utils';
+import {customOnChange} from '../../utils/utils';
+import MarketDropdown from '../../components/MarketDropdown/MarketDropdown';
 
-type OrderType = 'popular' | 'price' | 'date';
+export type OrderType = 'popular' | 'price' | 'date';
 
 export interface FormikValues extends Record<string, string[]> {
   sex: string[];
@@ -67,6 +68,7 @@ const Market: FC = () => {
   const {modalStore: {setCurrentModal}} = useStore();
 
   const [orderType, setOrderType] = useState<OrderType>('popular');
+  const [isDropdownOpened, setIsDropdownOpened] = useState(false);
 
   const initialValues: FormikValues = {
     sex: [],
@@ -84,41 +86,46 @@ const Market: FC = () => {
 
             <ul className='header-market__list'>
 
-              <li
-                className='header-market__item'
-                onClick={() => setOrderType('popular')}
-              >
-                <OrderButton isActive={orderType === 'popular'}>
+              <li className='header-market__item'>
+                <OrderButton
+                  isActive={orderType === 'popular'}
+                  onClick={() => setOrderType('popular')}
+                >
                   По популярности
                 </OrderButton>
               </li>
 
-              <li
-                className='header-market__item'
-                onClick={() => setOrderType('price')}
-              >
-                <OrderButton isActive={orderType === 'price'}>
+              <li className='header-market__item'>
+                <OrderButton
+                  isActive={orderType === 'price'}
+                  onClick={() => setOrderType('price')}
+                >
                   По цене
                 </OrderButton>
               </li>
 
-              <li
-                className='header-market__item'
-                onClick={() => setOrderType('date')}
-              >
-                <OrderButton isActive={orderType === 'date'}>
+              <li className='header-market__item'>
+                <OrderButton
+                  isActive={orderType === 'date'}
+                  onClick={() => setOrderType('date')}
+                >
                   По новизне
                 </OrderButton>
               </li>
 
             </ul>
+
+            <button
+              className="header-market__mobile-filter-button"
+              onClick={() => setIsDropdownOpened(true)}
+            >Фильтры</button>
           </div>
         </div>
 
         <div className='market__content content-market'>
           <div className='content-market__container container'>
 
-            <div className='content-market__filter filter-market-content'>
+            <div className="content-market__filter filter-market-content">
               <div className='filter-market-content__container'>
 
                 <Formik
@@ -140,7 +147,8 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='sex'
                                 value='male'
-                                onChange={() => {}}
+                                onChange={() => {
+                                }}
                               >
                                 Мужской
                               </FilterCheckbox>
@@ -151,7 +159,8 @@ const Market: FC = () => {
                                 type='checkbox'
                                 name='sex'
                                 value='female'
-                                onChange={() => {}}
+                                onChange={() => {
+                                }}
                               >
                                 Женский
                               </FilterCheckbox>
@@ -355,22 +364,15 @@ const Market: FC = () => {
 
                       </div>
 
-                      <div className='filter-market-content__button-wrapper'>
-                        <button
-                          type='button'
-                          className='filter-market-content__button'
-                          onClick={props.handleReset}
-                        >
-                          Сбросить фильтры
-                        </button>
-                      </div>
+                      <MarketDropdown
+                        isOpened={isDropdownOpened}
+                        onDismiss={() => setIsDropdownOpened(false)}
+                        order={orderType}
+                        setOrder={(newOrder) => setOrderType(newOrder)}
+                      />
                     </>
                   )}
                 </Formik>
-
-                <form id='filter'>
-
-                </form>
 
               </div>
             </div>

@@ -3,12 +3,24 @@
   height: calc(100vh - 81px);
 }
 
+.leaflet-pane {
+  z-index: 1 !important;
+}
+
+.leaflet-bottom {
+  z-index: 1 !important;
+}
+
 .map {
   &__container {
     position: relative;
     margin: 81px 0 0 0;
     width: 100%;
     height: 100%;
+
+    //@media (max-width: 769px) {
+    //  margin: 64px 0 0 0;
+    //}
   }
 
   &__controls {
@@ -16,7 +28,12 @@
     top: 32px;
     left: calc((100% - 1200px) / 2);
     width: 1200px;
-    z-index: 1000;
+    z-index: 2;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+      left: 0;
+    }
   }
 
   &__cards {
@@ -28,6 +45,24 @@
     overflow: hidden;
     overflow-y: scroll;
     z-index: 1000;
+
+
+    @media (max-width: 1200px) {
+      width: 384px;
+      left: 0;
+    }
+
+    @media (max-width: 959px) {
+      display: none;
+    }
+  }
+
+  &__mobile-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
   }
 }
 
@@ -41,10 +76,32 @@
 
   &__search-bar {
     flex: 1 1 600px;
+
+    @media (max-width: 769px) {
+      width: 100%;
+    }
+  }
+
+  &__mobile-filter-settings {
+    display: none;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(21, 45, 103, 0.12);
+    border-radius: 8px;
+
+    @media (max-width: 769px) {
+      display: block;
+    }
   }
 
   &__select {
     flex: 1 1 280px;
+
+    @media (max-width: 769px) {
+      display: none;
+    }
   }
 
   &__select-placeholder {
@@ -54,7 +111,11 @@
 
 .cards-map {
   &__container {
+    @media (max-width: 1220px) {
+      padding: 0 0 0 10px;
+    }
   }
+
   &__card {
 
     width: 384px;

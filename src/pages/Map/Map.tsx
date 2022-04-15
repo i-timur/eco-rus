@@ -9,13 +9,16 @@ import SelectList from '../../components/UI/Select/components/SelectList';
 import SelectItem from '../../components/UI/Select/components/SelectItem';
 import {Outlet} from 'react-router-dom';
 import './Map.scss';
+import Icon from '../../components/UI/Icon/Icon';
+import MapCardsDropdown from '../../components/MapCardsDropdown/MapCardsDropdown';
+import MapFilterDropdown from '../../components/MapFilterDropdown/MapFilterDropdown';
 
 interface FormikValues {
   shops: string[];
   materials: string[];
 }
 
-const shopsOptions = [
+export const shopsOptions = [
   {
     text: 'Выбрать все',
     value: 'all'
@@ -42,29 +45,49 @@ const shopsOptions = [
   },
 ];
 
-const materialsOptions = [
+export const materialsOptions = [
   {
     text: 'Выбрать все',
     value: 'all'
   },
   {
-    text: 'Материал1',
-    value: 'material1'
+    text: 'Обувь',
+    value: 'shoes'
   },
   {
-    text: 'Материал2',
-    value: 'material2'
+    text: 'Старая одежда',
+    value: 'old_wear'
   },
   {
-    text: 'Материал3',
-    value: 'material3'
-  }
+    text: 'Стекло',
+    value: 'glass'
+  },
+  {
+    text: 'Бумага',
+    value: 'paper'
+  },
+  {
+    text: 'Металл',
+    value: 'metal'
+  },
+  {
+    text: 'Батареика',
+    value: 'accum'
+  },
 ];
 
 const Map: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isShopsDropDownOpen, setIsShopsDropDownOpen] = useState(false);
   const [isMaterialsDropDownOpen, setIsMaterialsDropDownOpen] = useState(false);
+  const [isCardsDropdownOpened, setIsCardsDropdownOpened] = useState(true);
+  const [isFilterDropdownOpened, setIsFilterDropdownOpened] = useState(false);
+
+  const openFilerDropdown = () => {
+    setIsCardsDropdownOpened(false);
+    setIsFilterDropdownOpened(true);
+  };
+
 
   const onShopsHeaderClick = () => {
     if (isShopsDropDownOpen) {
@@ -107,6 +130,10 @@ const Map: FC = () => {
     }
   };
 
+  const onFilterDropdownDismiss = () => {
+    setIsFilterDropdownOpened(false);
+    setIsCardsDropdownOpened(true);
+  };
 
   const initialValues: FormikValues = {
     shops: [],
@@ -130,61 +157,81 @@ const Map: FC = () => {
               />
             </div>
 
+            <button
+              className="controls-map__mobile-filter-settings"
+              onClick={openFilerDropdown}
+            >
+              <Icon
+                name="filter"
+                color="rgba(0, 11, 38, 0.72)"
+              />
+            </button>
+
             <Formik
               initialValues={initialValues}
               onSubmit={() => {
               }}
             >
               {(props) => (
-                  <>
-                    <div className="controls-map__select">
-                      <Select>
-                        <SelectHeader
-                          isOpen={isShopsDropDownOpen}
-                          onClick={onShopsHeaderClick}
-                        >
-                          {shopSelectHeaderText(props)}
-                        </SelectHeader>
-                        <SelectList isOpen={isShopsDropDownOpen}>
-                          {shopsOptions.map((o) => (
-                            <SelectItem
-                              key={o.value}
-                              name="shops"
-                              value={o.value}
-                            >{o.text}</SelectItem>
-                          ))}
-                        </SelectList>
-                      </Select>
-                    </div>
+                <>
+                  <div className="controls-map__select">
+                    <Select>
+                      <SelectHeader
+                        isOpen={isShopsDropDownOpen}
+                        onClick={onShopsHeaderClick}
+                      >
+                        {shopSelectHeaderText(props)}
+                      </SelectHeader>
+                      <SelectList isOpen={isShopsDropDownOpen}>
+                        {shopsOptions.map((o) => (
+                          <SelectItem
+                            key={o.value}
+                            name="shops"
+                            value={o.value}
+                          >{o.text}</SelectItem>
+                        ))}
+                      </SelectList>
+                    </Select>
+                  </div>
 
 
-                    <div className="controls-map__select">
-                      <Select>
-                        <SelectHeader
-                          isOpen={isMaterialsDropDownOpen}
-                          onClick={onMaterialsHeaderClick}
-                        >
-                          {materialsSelectHeaderText(props)}
-                        </SelectHeader>
-                        <SelectList isOpen={isMaterialsDropDownOpen}>
-                          {materialsOptions.map((o) => (
-                            <SelectItem
-                              key={o.value}
-                              name="materials"
-                              value={o.value}
-                            >{o.text}</SelectItem>
-                          ))}
-                        </SelectList>
-                      </Select>
-                    </div>
-                  </>
+                  <div className="controls-map__select">
+                    <Select>
+                      <SelectHeader
+                        isOpen={isMaterialsDropDownOpen}
+                        onClick={onMaterialsHeaderClick}
+                      >
+                        {materialsSelectHeaderText(props)}
+                      </SelectHeader>
+                      <SelectList isOpen={isMaterialsDropDownOpen}>
+                        {materialsOptions.map((o) => (
+                          <SelectItem
+                            key={o.value}
+                            name="materials"
+                            value={o.value}
+                          >{o.text}</SelectItem>
+                        ))}
+                      </SelectList>
+                    </Select>
+                  </div>
+
+                  <MapFilterDropdown
+                    isOpened={isFilterDropdownOpened}
+                    onDismiss={onFilterDropdownDismiss}
+                  />
+                </>
               )}
             </Formik>
           </div>
         </div>
 
+        <MapCardsDropdown
+          isOpened={isCardsDropdownOpened}
+          onDismiss={() => setIsCardsDropdownOpened(false)}
+        />
+
         <div className="map__cards cards-map">
-          <div className="cards-map__container container">
+          <div className="cards-map__container">
 
             <Outlet/>
 
