@@ -7,14 +7,26 @@
     max-width: 1200px;
     margin: 120px auto 0;
 
-    @media (max-width: 1220px) {
-      margin: 120px 32px 0;
+    @media (max-width: 1240px) {
+      margin: 120px 22px 0;
+    }
+
+    @media (max-width: 959px) {
+      margin: 80px 0 0 0;
+    }
+
+    @media (max-width: 769px) {
+      margin: 68px 0 0 0;
     }
   }
 
   &__cards {
     flex: 0 1 auto;
     margin: 48px 0 0 0;
+
+    @media (max-width: 959px) {
+      margin: 0;
+    }
   }
 
   &__footer {
@@ -22,6 +34,10 @@
     margin: 108px 0 0 0;
     background: #FFFFFF;
     box-shadow: 0px -0.5px 0px rgba(0, 0, 0, 0.12);
+
+    @media (max-width: 959px) {
+      margin: 40px 0 0 0;
+    }
   }
 }
 
@@ -29,14 +45,28 @@
   &__container {
     overflow: hidden;
     border-radius: 16px;
+
+    @media (max-width: 959px) {
+      border-radius: 0;
+    }
   }
 }
+
 .swiper {
   position: static;
 
+  &-wrapper {
+  }
+
   &-slide {
-    height: 320px;
+    min-height: 100%;
     width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+
+    @media (max-width: 959px) {
+      border-radius: 0;
+    }
   }
 
   &-button-prev {
@@ -53,6 +83,10 @@
     background-size: auto;
     background-position: center center;
     box-shadow: 0px 4px 24px rgba(0, 11, 38, 0.12);
+
+    @media (max-width: 959px) {
+      display: none;
+    }
   }
 
   &-button-prev::after {
@@ -73,6 +107,10 @@
     background-size: auto;
     background-position: center center;
     box-shadow: 0px 4px 24px rgba(0, 11, 38, 0.12);
+
+    @media (max-width: 959px) {
+      display: none;
+    }
   }
 
   &-button-next::after {
@@ -85,9 +123,30 @@
     display: flex;
     justify-content: space-between;
     column-gap: 24px;
+    row-gap: 24px;
+
+    @media (max-width: 959px) {
+      flex-wrap: wrap;
+    }
   }
 
   &__item {
     flex: 0 1 50%;
+
+    &:nth-child(1) {
+      @media (max-width: 959px) {
+        margin: -30% 0 0 0;
+      }
+
+      @media (max-width: 759px) {
+        margin: -40% 0 0 0;
+      }
+    }
+
+    @media (max-width: 959px) {
+      flex: 0 1 100%;
+      position: relative;
+      z-index: 1;
+    }
   }
 }

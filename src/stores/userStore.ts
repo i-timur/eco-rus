@@ -29,7 +29,10 @@ export class User {
   }
 
   getBalance() {
-    return this.balance;
+    if (this.role === 'USER') {
+      return this.balance;
+    }
+    return 0;
   }
 
   getRole() {

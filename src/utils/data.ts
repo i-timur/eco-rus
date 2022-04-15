@@ -32,9 +32,12 @@ export const SHOPS = [
 ];
 export const MATERIALS = [
   'all',
-  'material1',
-  'material2',
-  'material3',
+  'shoes',
+  'old_wear',
+  'glass',
+  'paper',
+  'metal',
+  'accum'
 ];
 
 export const API_URL = 'https://ecoapp.cloud.technokratos.com/eco-rus/api/v1';

@@ -1,44 +1,46 @@
 import React from 'react';
 
-import logo from '../../assets/icons/logo.svg';
-import ecoDollar from  '../../assets/icons/eco-dollar.svg';
-import avatarIcon from '../../assets/icons/profile-image.svg';
+import ecoDollar from '../../assets/icons/eco-dollar.svg';
+import logo from '../../assets/images/navbar/logo.svg';
+import LogoMobile from '../../assets/images/navbar/logo-mobile.svg';
+import avatarIcon from '../../assets/images/navbar/profile-image-s.svg';
 import {Link, NavLink} from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
 import {useStore} from '../../index';
 import {observer} from 'mobx-react-lite';
 import ModalSignIn from '../Modals/ModalSignIn/ModalSignIn';
+import ModalSidebar from '../Modals/ModalSidebar/ModalSidebar';
 import './Navbar.scss';
 
 const activeClassName = 'navigation__link navigation__link_active';
 const notActiveClassName = 'navigation__link';
 
 const Navbar: React.FC = observer(() => {
-  const {modalStore: {setCurrentModal}, authorizationStore: {isAuthenticated}, userStore} = useStore();
+  const {modalStore: {setCurrentModal}, authorizationStore: {isAuthenticated}, userStore: {getUser}} = useStore();
 
-  const userId = userStore.getUser() ? userStore.getUser()?.getId() : undefined;
-  const userName = userStore.getUser() ? userStore.getUser()?.getUserName() : 'Loading...';
-  const getUserBalance = () => {
-    if (userStore.getState() === 'done') {
-      if (userStore.getUser()?.getRole() === 'USER') {
-        const balance = userStore.getUser()?.getBalance();
-        if (balance) {
-          return balance;
-        } else {
-          return 0;
-        }
-      } else {
-        return 0;
-      }
-    }
-  };
+  const user = getUser();
+
+  const userId = user?.getId();
+  const userName = user?.getUserName();
+  const balance = user?.getBalance();
 
   return (
     <div className='navbar'>
       <div className='navbar__container container'>
         <div className='navbar__logo'>
           <Link to='/'>
-            <img src={logo} alt='logo' />
+            <img
+              src={logo}
+              alt='logo'
+            />
+          </Link>
+        </div>
+        <div className="navbar__logo-mobile">
+          <Link to="/">
+            <img
+              src={LogoMobile}
+              alt="logo"
+            />
           </Link>
         </div>
         <nav className='navbar__navigation navigation'>
@@ -78,42 +80,30 @@ const Navbar: React.FC = observer(() => {
           </ul>
         </nav>
         <ul className='navbar__user user-navbar'>
-          <li
-            className='user-navbar__item'
-            style={{
-              marginRight: '48px'
-            }}
-          >
+          <li className='user-navbar__city'>
             <button className='user-navbar__button'>
-              <Icon name='pin' color='rgba(0, 11, 38, 0.72)' />
+              <Icon name='pin' color='rgba(0, 11, 38, 0.72)'/>
               Казань
             </button>
           </li>
           {isAuthenticated ? (
             <>
-              <li
-                className='user-navbar__item'
-                style={{
-                  marginRight: '24px',
-                  color: '#000000',
-                  fontWeight: '600'
-                }}
-              >
+              <li className='user-navbar__balance'>
                 <Link
                   to={`/profile/${userId}`}
                   className='user-navbar__link'
                 >
-                  <img src={ecoDollar} alt='eco-dollar' />
-                  {getUserBalance()}
+                  <img src={ecoDollar} alt='eco-dollar'/>
+                  {balance}
                 </Link>
               </li>
               <li className='user-navbar__item'>
                 <Link
                   to={`/profile/${userId}`}
                   className='user-navbar__link'
-                  >
-                  <img src={avatarIcon} alt='avatar' />
-                  {userName}
+                >
+                  <img src={avatarIcon} alt='avatar'/>
+                  <span className="user-navbar__user-name">{userName}</span>
                 </Link>
               </li>
             </>
@@ -122,15 +112,27 @@ const Navbar: React.FC = observer(() => {
               <li className='user-navbar__item'>
                 <button
                   className='user-navbar__button'
-                  onClick={() => setCurrentModal(<ModalSignIn />)}
-                  >
-                  <Icon name='login' color='rgba(0, 11, 38, 0.72)' />
+                  onClick={() => setCurrentModal(<ModalSignIn/>)}
+                >
+                  <Icon name='login' color='rgba(0, 11, 38, 0.72)'/>
                   Войти
                 </button>
               </li>
             </>
           )}
         </ul>
+        <div className="navbar__mobile">
+          <div
+            className="user-navbar__burger burger"
+            onClick={() => setCurrentModal(<ModalSidebar />)}
+          >
+            <div className="burger__container">
+              <div className="burger__line"/>
+              <div className="burger__line"/>
+              <div className="burger__line"/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

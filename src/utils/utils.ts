@@ -86,3 +86,11 @@ export const getHttpClient = () => {
 
   return http;
 };
+
+export const getBtnHeight = (size: string) => {
+  switch (size) {
+    case 's': return '48px';
+    case 'm': return '56px';
+    default: return '56px';
+  }
+};
