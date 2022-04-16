@@ -1,14 +1,8 @@
 import React, {FC, useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import './Market.scss';
-import MarketCard, {IMarketCard} from '../../components/MarketCard/MarketCard';
+import MarketCard from '../../components/MarketCard/MarketCard';
 import ecoDollar from '../../assets/icons/eco-dollar.svg';
-import image1 from '../../assets/images/market/image1.png';
-import image2 from '../../assets/images/market/image2.png';
-import image3 from '../../assets/images/market/image3.png';
-import image4 from '../../assets/images/market/image4.png';
-import image5 from '../../assets/images/market/image5.png';
 import OrderButton from '../../components/UI/OrderButton/OrderButton';
 import Footer from '../../components/Footer/Footer';
 import FilterCheckbox from '../../components/UI/FilterCheckbox/FilterCheckbox';
@@ -17,6 +11,8 @@ import {useStore} from '../../index';
 import ModalQrCode from '../../components/Modals/ModalQrCode/ModalQrCode';
 import {customOnChange} from '../../utils/utils';
 import MarketDropdown from '../../components/MarketDropdown/MarketDropdown';
+import {marketCards} from '../../utils/data';
+import './Market.scss';
 
 export type OrderType = 'popular' | 'price' | 'date';
 
@@ -25,44 +21,6 @@ export interface FormikValues extends Record<string, string[]> {
   type: string[];
   brand: string[];
 }
-
-const cards: IMarketCard[] = [
-  {
-    name: 'Nike Air Max 2021',
-    category: 'Мужская обувь',
-    brand: 'NIKE',
-    price: 1000,
-    image: image1
-  },
-  {
-    name: 'Nike Air Max 90 Premium',
-    category: 'Мужская обувь',
-    brand: 'NIKE',
-    price: 750,
-    image: image2
-  },
-  {
-    name: 'Adidas Alphabounce RC',
-    category: 'Мужская обувь',
-    brand: 'Adidas',
-    price: 1200,
-    image: image3
-  },
-  {
-    name: 'Nike Air Max 2021',
-    category: 'Мужская обувь',
-    brand: 'H&M',
-    price: 1000,
-    image: image4
-  },
-  {
-    name: 'Nike Air Force 1 Low',
-    category: 'Мужская обувь',
-    brand: 'NIKE',
-    price: 2100,
-    image: image5
-  },
-];
 
 const Market: FC = () => {
   const {modalStore: {setCurrentModal}} = useStore();
@@ -400,7 +358,8 @@ const Market: FC = () => {
                   </div>
                 </li>
 
-                {cards.map((card, i) => (
+
+                {marketCards.map((card, i) => (
                   <li
                     className='content-market__item'
                     key={i}

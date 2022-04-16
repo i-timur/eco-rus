@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
-import {LatLngExpression} from 'leaflet';
 
-const startPosition: LatLngExpression = [55.7887, 49.1221];
+import {startPosition} from '../../utils/data';
+
 
 const MapComponent: FC = () => {
   return (

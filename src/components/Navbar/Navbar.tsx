@@ -1,13 +1,13 @@
 import React from 'react';
+import {Link, NavLink} from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
 
 import ecoDollar from '../../assets/icons/eco-dollar.svg';
 import logo from '../../assets/images/navbar/logo.svg';
 import LogoMobile from '../../assets/images/navbar/logo-mobile.svg';
 import avatarIcon from '../../assets/images/navbar/profile-image-s.svg';
-import {Link, NavLink} from 'react-router-dom';
 import Icon from '../UI/Icon/Icon';
 import {useStore} from '../../index';
-import {observer} from 'mobx-react-lite';
 import ModalSignIn from '../Modals/ModalSignIn/ModalSignIn';
 import ModalSidebar from '../Modals/ModalSidebar/ModalSidebar';
 import './Navbar.scss';

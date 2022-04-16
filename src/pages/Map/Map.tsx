@@ -1,80 +1,23 @@
 import {FC, useState} from 'react';
+import {Outlet} from 'react-router-dom';
+import {Formik, FormikProps} from 'formik';
 
 import SearchBar from '../../components/UI/SearchBar/SearchBar';
 import Select from '../../components/UI/Select/Select';
 import MapComponent from '../../components/MapComponent/MapComponent';
-import {Formik, FormikProps} from 'formik';
 import SelectHeader from '../../components/UI/Select/components/SelectHeader';
 import SelectList from '../../components/UI/Select/components/SelectList';
 import SelectItem from '../../components/UI/Select/components/SelectItem';
-import {Outlet} from 'react-router-dom';
-import './Map.scss';
 import Icon from '../../components/UI/Icon/Icon';
 import MapCardsDropdown from '../../components/MapCardsDropdown/MapCardsDropdown';
 import MapFilterDropdown from '../../components/MapFilterDropdown/MapFilterDropdown';
+import {materialsOptions, shopsOptions} from '../../utils/data';
+import './Map.scss';
 
 interface FormikValues {
   shops: string[];
   materials: string[];
 }
-
-export const shopsOptions = [
-  {
-    text: 'Выбрать все',
-    value: 'all'
-  },
-  {
-    text: 'H&M',
-    value: 'HM'
-  },
-  {
-    text: 'P&B',
-    value: 'PB'
-  },
-  {
-    text: 'Adidas',
-    value: 'Adidas'
-  },
-  {
-    text: 'Nike',
-    value: 'Nike'
-  },
-  {
-    text: 'Reebok',
-    value: 'Reebok'
-  },
-];
-
-export const materialsOptions = [
-  {
-    text: 'Выбрать все',
-    value: 'all'
-  },
-  {
-    text: 'Обувь',
-    value: 'shoes'
-  },
-  {
-    text: 'Старая одежда',
-    value: 'old_wear'
-  },
-  {
-    text: 'Стекло',
-    value: 'glass'
-  },
-  {
-    text: 'Бумага',
-    value: 'paper'
-  },
-  {
-    text: 'Металл',
-    value: 'metal'
-  },
-  {
-    text: 'Батареика',
-    value: 'accum'
-  },
-];
 
 const Map: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

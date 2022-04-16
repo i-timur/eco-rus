@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {BottomSheet} from 'react-spring-bottom-sheet';
 
-import './MapCardsDropdown.scss';
 import MapCards from '../MapCards/MapCards';
+import './MapCardsDropdown.scss';
 
 interface Props {
   isOpened: boolean;

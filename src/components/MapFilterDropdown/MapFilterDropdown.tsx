@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
 import {BottomSheet} from 'react-spring-bottom-sheet';
+import {useFormikContext} from 'formik';
 
-import './MapFilterDropdown.scss';
 import PrimaryButton from '../UI/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../UI/SecondaryButton/SecondaryButton';
-import {useFormikContext} from 'formik';
-import SelectItem from '../UI/Select/components/SelectItem';
-import {materialsOptions, shopsOptions} from '../../pages/Map/Map';
 import FilterCheckbox from '../UI/FilterCheckbox/FilterCheckbox';
 import {customOnChange} from '../../utils/utils';
+import './MapFilterDropdown.scss';
+import {materialsOptions, shopsOptions} from '../../utils/data';
 
 interface Props {
   isOpened: boolean;
